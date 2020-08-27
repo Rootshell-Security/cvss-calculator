@@ -19,6 +19,10 @@ class CvssObject
 
     public float $attackVector;
 
+    public float $accessVector;
+
+    public float $authentication;
+
     public float $attackComplexity;
 
     public float $privilegesRequired;
@@ -72,6 +76,10 @@ class CvssObject
     public float $modifiedImpact;
 
     public float $modifiedExploitability;
+
+    public float $collateralDamagePotential;
+
+    public float $targetDistribution;
 
     public float $environmentalScore;
 
