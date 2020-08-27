@@ -51,9 +51,6 @@ class CvssGenerator
                 $cvssObject->temporalScore = $this->calculator31->calculateTemporalScore($cvssObject);
                 $cvssObject->environmentalScore = $this->calculator31->calculateEnvironmentalScore($cvssObject);
                 break;
-
-            default:
-                throw CvssException::invalidVector();
         }
 
         return $cvssObject->getResults();

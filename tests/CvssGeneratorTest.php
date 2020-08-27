@@ -11,7 +11,7 @@ use Rootshell\Cvss\Exceptions\CvssException;
 use Rootshell\Cvss\Generators\CvssGenerator;
 use Rootshell\Cvss\Parsers\Cvss31Parser;
 
-class CvssServiceTest extends TestCase
+class CvssGeneratorTest extends TestCase
 {
     private CvssGenerator $cvssGenerator;
 
