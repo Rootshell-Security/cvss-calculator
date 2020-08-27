@@ -5,28 +5,18 @@ declare(strict_types=1);
 namespace Rootshell\Cvss\Test;
 
 use PHPUnit\Framework\TestCase;
-use Rootshell\Cvss\Calculators\Cvss30Calculator;
-use Rootshell\Cvss\Calculators\Cvss31Calculator;
+use Rootshell\Cvss\Cvss;
 use Rootshell\Cvss\Exceptions\CvssException;
-use Rootshell\Cvss\Generators\CvssGenerator;
-use Rootshell\Cvss\Parsers\Cvss31Parser;
 
-class CvssGeneratorTest extends TestCase
+class CvssTest extends TestCase
 {
-    private CvssGenerator $cvssGenerator;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->cvssGenerator = new CvssGenerator(new Cvss30Calculator, new Cvss31Calculator, new Cvss31Parser);
-    }
 
     /**
      * @dataProvider vectorProvider
      */
     public function testGenerateScores(string $vector, float $baseScore, float $temporalScore, float $environmentScore): void
     {
-        $result = $this->cvssGenerator->generateScores($vector);
+        $result = Cvss::generateScores($vector);
 
         self::assertEquals($baseScore, $result->baseScore);
         self::assertEquals($temporalScore, $result->temporalScore);
@@ -64,7 +54,7 @@ class CvssGeneratorTest extends TestCase
     {
         $this->expectException(CvssException::class);
 
-        $this->cvssGenerator->generateScores($vector);
+        Cvss::generateScores($vector);
     }
 
     public function invalidVectorProvider(): array
