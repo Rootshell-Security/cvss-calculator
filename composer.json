@@ -1,0 +1,31 @@
+{
+  "name": "rootshell/cvss-calculator",
+  "type": "library",
+  "description": "A PHP library for calculating CVSS security scores.",
+  "keywords": [
+    "cvss",
+    "security",
+    "calculator"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": "^7.4 || ^8",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Rootshell\\Cvss\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Rootshell\\Cvss\\Test\\": "tests/"
+    }
+  }
+}
