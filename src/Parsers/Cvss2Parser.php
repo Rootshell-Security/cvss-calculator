@@ -9,7 +9,6 @@ use Rootshell\Cvss\ValueObjects\CvssObject;
 
 class Cvss2Parser
 {
-
     private const NETWORK = 'N';
     private const ADJACENT = 'A';
     private const LOCAL = 'L';
@@ -105,7 +104,7 @@ class Cvss2Parser
     private static function findValueInVector(string $vector, string $section): string
     {
         $regex = '/(?<=\/' . $section . ':)(.*?)(?=\/|$)/';
-        preg_match($regex, $vector, $matches);
+        preg_match($regex, '/' . $vector, $matches);
 
         if (!isset($matches[0])) {
             throw CvssException::missingValue();
@@ -117,7 +116,7 @@ class Cvss2Parser
     private static function findOptionalValueInVector(string $vector, string $section): ?string
     {
         $regex = '/(?<=\/' . $section . ':)(.*?)(?=\/|$)/';
-        preg_match($regex, $vector, $matches);
+        preg_match($regex, '/' . $vector, $matches);
 
         return $matches[0] ?? null;
     }
