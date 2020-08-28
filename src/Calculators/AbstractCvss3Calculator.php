@@ -6,7 +6,7 @@ namespace Rootshell\Cvss\Calculators;
 
 use Rootshell\Cvss\ValueObjects\CvssObject;
 
-abstract class AbstractCvss3Calculator
+abstract class AbstractCvss3Calculator implements CvssCalculator
 {
     abstract public function calculateModifiedImpactSubScore(CvssObject $cvssObject): float;
     abstract public function calculateModifiedImpact(CvssObject $cvssObject): float;

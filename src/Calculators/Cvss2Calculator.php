@@ -7,7 +7,7 @@ namespace Rootshell\Cvss\Calculators;
 use Rootshell\Cvss\Cvss;
 use Rootshell\Cvss\ValueObjects\CvssObject;
 
-class Cvss2Calculator
+class Cvss2Calculator implements CvssCalculator
 {
 
     public function calculateBaseScore(CvssObject $cvssObject): float
