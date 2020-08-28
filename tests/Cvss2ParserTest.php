@@ -160,7 +160,7 @@ class Cvss2ParserTest extends TestCase
 
     public function testParseVectorFull(): void
     {
-        $result = $this->parser->parseVector('CVSS:2/AV:N/AC:M/Au:M/C:C/I:P/A:N/E:POC/RL:OF/RC:C/CDP:MH/TD:L/CR:ND/IR:L/AR:H');
+        $result = $this->parser::parseVector('CVSS:2/AV:N/AC:M/Au:M/C:C/I:P/A:N/E:POC/RL:OF/RC:C/CDP:MH/TD:L/CR:ND/IR:L/AR:H');
 
         self::assertEquals(1.0, $result->accessVector);
         self::assertEquals(0.61, $result->accessComplexity);
