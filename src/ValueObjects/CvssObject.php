@@ -21,9 +21,11 @@ class CvssObject
 
     public float $accessVector;
 
-    public float $authentication;
-
     public float $attackComplexity;
+
+    public float $accessComplexity;
+
+    public float $authentication;
 
     public float $privilegesRequired;
 

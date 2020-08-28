@@ -40,7 +40,7 @@ class Cvss2Parser
     private const CONFIRMED = 'C';
 
     private const LOW_MEDIUM = 'LM';
-    private const MEDIUM_HIGH = 'LM';
+    private const MEDIUM_HIGH = 'MH';
 
     private const BASE_ACCESS_VECTOR = 'AV';
     private const BASE_ATTACK_COMPLEXITY = 'AC';
@@ -73,11 +73,11 @@ class Cvss2Parser
     private static function parseBaseValues(string $vector, CvssObject $cvssObject): CvssObject
     {
         $cvssObject->accessVector = self::parseAccessVector(self::findValueInVector($vector, self::BASE_ACCESS_VECTOR));
-        $cvssObject->attackComplexity = self::parseAccessVector(self::findValueInVector($vector, self::BASE_ATTACK_COMPLEXITY));
-        $cvssObject->authentication = self::parseAccessVector(self::findValueInVector($vector, self::BASE_AUTHENTICATION));
-        $cvssObject->confidentiality = self::parseAccessVector(self::findValueInVector($vector, self::BASE_CONFIDENTIALITY));
-        $cvssObject->integrity = self::parseAccessVector(self::findValueInVector($vector, self::BASE_INTEGRITY));
-        $cvssObject->availability = self::parseAccessVector(self::findValueInVector($vector, self::BASE_AVAILABILITY));
+        $cvssObject->accessComplexity = self::parseAccessComplexity(self::findValueInVector($vector, self::BASE_ATTACK_COMPLEXITY));
+        $cvssObject->authentication = self::parseAuthentication(self::findValueInVector($vector, self::BASE_AUTHENTICATION));
+        $cvssObject->confidentiality = self::parseConfidentialityIntegrityAvailabilityImpact(self::findValueInVector($vector, self::BASE_CONFIDENTIALITY));
+        $cvssObject->integrity = self::parseConfidentialityIntegrityAvailabilityImpact(self::findValueInVector($vector, self::BASE_INTEGRITY));
+        $cvssObject->availability = self::parseConfidentialityIntegrityAvailabilityImpact(self::findValueInVector($vector, self::BASE_AVAILABILITY));
         return $cvssObject;
     }
 
@@ -93,10 +93,10 @@ class Cvss2Parser
     private static function parseEnvironmentalValues(string $vector, CvssObject $cvssObject): CvssObject
     {
         $cvssObject->collateralDamagePotential = self::parseCollateralDamagePotential(self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_COLLATERAL_DAMAGE_POTENTIAL));
-        $cvssObject->targetDistribution = self::parseCollateralDamagePotential(self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_TARGET_DISTRIBUTION));
-        $cvssObject->confidentialityRequirement = self::parseCollateralDamagePotential(self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_CONFIDENTIALITY_REQUIREMENT));
-        $cvssObject->integrityRequirement = self::parseCollateralDamagePotential(self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_INTEGRITY_REQUIREMENT));
-        $cvssObject->availabilityRequirement = self::parseCollateralDamagePotential(self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_AVAILABILITY_REQUIREMENT));
+        $cvssObject->targetDistribution = self::parseTargetDistribution(self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_TARGET_DISTRIBUTION));
+        $cvssObject->confidentialityRequirement = self::parseSecurityRequirements(self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_CONFIDENTIALITY_REQUIREMENT));
+        $cvssObject->integrityRequirement = self::parseSecurityRequirements(self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_INTEGRITY_REQUIREMENT));
+        $cvssObject->availabilityRequirement = self::parseSecurityRequirements(self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_AVAILABILITY_REQUIREMENT));
 
         return $cvssObject;
     }
@@ -104,7 +104,7 @@ class Cvss2Parser
 
     private static function findValueInVector(string $vector, string $section): string
     {
-        $regex = '/(?<=\/' . $section . ':)(.)/';
+        $regex = '/(?<=\/' . $section . ':)(.*?)(?=\/|$)/';
         preg_match($regex, $vector, $matches);
 
         if (!isset($matches[0])) {
@@ -116,7 +116,7 @@ class Cvss2Parser
 
     private static function findOptionalValueInVector(string $vector, string $section): ?string
     {
-        $regex = '/(?<=\/' . $section . ':)(.)/';
+        $regex = '/(?<=\/' . $section . ':)(.*?)(?=\/|$)/';
         preg_match($regex, $vector, $matches);
 
         return $matches[0] ?? null;
@@ -174,10 +174,10 @@ class Cvss2Parser
     {
         switch ($value) {
             case self::COMPLETE:
-                return 0.45;
+                return 0.660;
 
             case self::PARTIAL:
-                return 0.56;
+                return 0.275;
 
             case self::NONE:
                 return 0.0;
@@ -186,7 +186,7 @@ class Cvss2Parser
         throw CvssException::invalidValue();
     }
 
-    public static function parseExploitability(string $value): float
+    public static function parseExploitability(?string $value): float
     {
         switch ($value) {
             case self::UNPROVEN:
@@ -203,14 +203,14 @@ class Cvss2Parser
         }
     }
 
-    public static function parseRemediationLevel(string $value): float
+    public static function parseRemediationLevel(?string $value): float
     {
         switch ($value) {
             case self::OFFICIAL_FIX:
                 return 0.87;
 
             case self::TEMPORARY_FIX:
-                return 0.9;
+                return 0.90;
 
             case self::WORKAROUND:
                 return 0.95;
@@ -220,7 +220,7 @@ class Cvss2Parser
         }
     }
 
-    public static function parseReportConfidence(string $value): float
+    public static function parseReportConfidence(?string $value): float
     {
         switch ($value) {
             case self::UNCONFIRMED:
@@ -234,7 +234,7 @@ class Cvss2Parser
         }
     }
 
-    public static function parseCollateralDamagePotential(string $value): float
+    public static function parseCollateralDamagePotential(?string $value): float
     {
         switch ($value) {
             case self::LOW:
@@ -254,7 +254,7 @@ class Cvss2Parser
         }
     }
 
-    public static function parseTargetDistribution(string $value): float
+    public static function parseTargetDistribution(?string $value): float
     {
         switch ($value) {
             case self::NONE:
@@ -271,7 +271,7 @@ class Cvss2Parser
         }
     }
 
-    public static function parseSecurityRequirements(string $value): float
+    public static function parseSecurityRequirements(?string $value): float
     {
         switch ($value) {
             case self::LOW:
