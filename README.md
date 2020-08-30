@@ -51,6 +51,11 @@ The rootshell/cvss-calculator library is copyright © [Rootshell Security LTD](h
 licensed for use under the MIT License (MIT). Please see [LICENSE][] for more
 information.
 
+[badge-source]: https://img.shields.io/badge/source-rootshell/cvss--calculator-blue.svg?style=flat-square
+[badge-release]: https://img.shields.io/packagist/v/rootshell/cvss-calculator.svg?style=flat-square&label=release
+[badge-license]: https://img.shields.io/packagist/l/rootshell/cvss-calculator.svg?style=flat-square
+[badge-php]: https://img.shields.io/packagist/php-v/rootshell/cvss-calculator.svg?style=flat-square
+
 [source]: https://github.com/Rootshell-Security/cvss-calculator
 [release]: https://packagist.org/packages/rootshell/cvss-calculator
 [php]: https://php.net
