@@ -38,6 +38,6 @@
   },
   "support": {
     "issues": "https://github.com/Rootshell-Security/cvss-calculator/issues",
-    "source": "https://github.com/Rootshell-Security/cvss-calculator/uuid"
+    "source": "https://github.com/Rootshell-Security/cvss-calculator"
   }
 }
