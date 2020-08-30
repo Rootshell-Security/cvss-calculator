@@ -2,6 +2,7 @@
   "name": "rootshell/cvss-calculator",
   "type": "library",
   "description": "A PHP library for calculating CVSS security scores.",
+  "homepage": "https://github.com/Rootshell-Security/cvss-calculator",
   "keywords": [
     "cvss",
     "security",
@@ -27,5 +28,9 @@
     "psr-4": {
       "Rootshell\\Cvss\\Test\\": "tests/"
     }
+  },
+  "support": {
+    "issues": "https://github.com/Rootshell-Security/cvss-calculator/issues",
+    "source": "https://github.com/Rootshell-Security/cvss-calculator/uuid"
   }
 }
