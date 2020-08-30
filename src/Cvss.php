@@ -36,7 +36,7 @@ class Cvss
 
     private static function parseVector(string $vector, string $version): CvssObject
     {
-        return $version === CvssObject::VERSION_2 ? Cvss2Parser::parseVector($vector) : (new Cvss31Parser)->parseVector($vector);
+        return $version === CvssObject::VERSION_2 ? Cvss2Parser::parseVector($vector) : Cvss31Parser::parseVector($vector);
     }
 
     private static function buildCalculator(string $version): CvssCalculator

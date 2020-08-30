@@ -60,91 +60,91 @@ class Cvss31Parser
     private const ENVIRONMENTAL_MODIFIED_INTEGRITY = 'MI';
     private const ENVIRONMENTAL_MODIFIED_AVAILABILITY = 'MA';
 
-    public function parseVector(string $vector): CvssObject
+    public static function parseVector(string $vector): CvssObject
     {
         $cvssObject = new CvssObject;
-        $cvssObject = $this->parseBaseValues($vector, $cvssObject);
-        $cvssObject = $this->parseTemporalValues($vector, $cvssObject);
-        $cvssObject = $this->parseEnvironmentalValues($vector, $cvssObject);
+        $cvssObject = self::parseBaseValues($vector, $cvssObject);
+        $cvssObject = self::parseTemporalValues($vector, $cvssObject);
+        $cvssObject = self::parseEnvironmentalValues($vector, $cvssObject);
 
         return $cvssObject;
     }
 
-    private function parseBaseValues(string $vector, CvssObject $cvssObject): CvssObject
+    private static function parseBaseValues(string $vector, CvssObject $cvssObject): CvssObject
     {
-        $cvssObject->modifiedScope = $cvssObject->scope = $this->findValueInVector($vector, self::BASE_SCOPE);
-        $cvssObject->modifiedAttackVector = $cvssObject->attackVector = $this->parseAttackVector($this->findValueInVector($vector, self::BASE_ATTACK_VECTOR));
-        $cvssObject->modifiedAttackComplexity = $cvssObject->attackComplexity = $this->parseAttackComplexity($this->findValueInVector($vector, self::BASE_ATTACK_COMPLEXITY));
-        $cvssObject->modifiedPrivilegesRequired = $cvssObject->privilegesRequired = $this->parsePrivilegesRequired($this->findValueInVector($vector, self::BASE_PRIVILEGES_REQUIRED), $cvssObject->scope);
-        $cvssObject->modifiedUserInteraction = $cvssObject->userInteraction = $this->parseUserInteraction($this->findValueInVector($vector, self::BASE_USER_INTERACTION));
-        $cvssObject->modifiedConfidentiality = $cvssObject->confidentiality = $this->parseConfidentialityIntegrityOrAvailability($this->findValueInVector($vector, self::BASE_CONFIDENTIALITY));
-        $cvssObject->modifiedIntegrity = $cvssObject->integrity = $this->parseConfidentialityIntegrityOrAvailability($this->findValueInVector($vector, self::BASE_INTEGRITY));
-        $cvssObject->modifiedAvailability = $cvssObject->availability = $this->parseConfidentialityIntegrityOrAvailability($this->findValueInVector($vector, self::BASE_AVAILABILITY));
+        $cvssObject->modifiedScope = $cvssObject->scope = self::findValueInVector($vector, self::BASE_SCOPE);
+        $cvssObject->modifiedAttackVector = $cvssObject->attackVector = self::parseAttackVector(self::findValueInVector($vector, self::BASE_ATTACK_VECTOR));
+        $cvssObject->modifiedAttackComplexity = $cvssObject->attackComplexity = self::parseAttackComplexity(self::findValueInVector($vector, self::BASE_ATTACK_COMPLEXITY));
+        $cvssObject->modifiedPrivilegesRequired = $cvssObject->privilegesRequired = self::parsePrivilegesRequired(self::findValueInVector($vector, self::BASE_PRIVILEGES_REQUIRED), $cvssObject->scope);
+        $cvssObject->modifiedUserInteraction = $cvssObject->userInteraction = self::parseUserInteraction(self::findValueInVector($vector, self::BASE_USER_INTERACTION));
+        $cvssObject->modifiedConfidentiality = $cvssObject->confidentiality = self::parseConfidentialityIntegrityOrAvailability(self::findValueInVector($vector, self::BASE_CONFIDENTIALITY));
+        $cvssObject->modifiedIntegrity = $cvssObject->integrity = self::parseConfidentialityIntegrityOrAvailability(self::findValueInVector($vector, self::BASE_INTEGRITY));
+        $cvssObject->modifiedAvailability = $cvssObject->availability = self::parseConfidentialityIntegrityOrAvailability(self::findValueInVector($vector, self::BASE_AVAILABILITY));
 
         return $cvssObject;
     }
 
-    private function parseTemporalValues(string $vector, CvssObject $cvssObject): CvssObject
+    private static function parseTemporalValues(string $vector, CvssObject $cvssObject): CvssObject
     {
-        $cvssObject->exploitCodeMaturity = $this->parseExploitCodeMaturity($this->findOptionalValueInVector($vector, self::TEMPORAL_EXPLOIT_CODE_MATURITY));
-        $cvssObject->remediationLevel = $this->parseRemediationLevel($this->findOptionalValueInVector($vector, self::TEMPORAL_REMEDIATION_LEVEL));
-        $cvssObject->reportConfidence = $this->parseReportConfidence($this->findOptionalValueInVector($vector, self::TEMPORAL_REPORT_CONFIDENCE));
+        $cvssObject->exploitCodeMaturity = self::parseExploitCodeMaturity(self::findOptionalValueInVector($vector, self::TEMPORAL_EXPLOIT_CODE_MATURITY));
+        $cvssObject->remediationLevel = self::parseRemediationLevel(self::findOptionalValueInVector($vector, self::TEMPORAL_REMEDIATION_LEVEL));
+        $cvssObject->reportConfidence = self::parseReportConfidence(self::findOptionalValueInVector($vector, self::TEMPORAL_REPORT_CONFIDENCE));
 
         return $cvssObject;
     }
 
-    private function parseEnvironmentalValues(string $vector, CvssObject $cvssObject): CvssObject
+    private static function parseEnvironmentalValues(string $vector, CvssObject $cvssObject): CvssObject
     {
-        $modifiedScopeValue = $this->findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_SCOPE);
+        $modifiedScopeValue = self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_SCOPE);
 
         if ($modifiedScopeValue && $modifiedScopeValue !== self::NOT_DEFINED) {
             $cvssObject->modifiedScope = $modifiedScopeValue;
         }
 
-        $cvssObject->confidentialityRequirement = $this->parseConfidentialityIntegrityOrAvailabilityRequirements($this->findOptionalValueInVector($vector, self::ENVIRONMENTAL_CONFIDENTIALITY_REQUIREMENT));
-        $cvssObject->integrityRequirement = $this->parseConfidentialityIntegrityOrAvailabilityRequirements($this->findOptionalValueInVector($vector, self::ENVIRONMENTAL_INTEGRITY_REQUIREMENT));
-        $cvssObject->availabilityRequirement = $this->parseConfidentialityIntegrityOrAvailabilityRequirements($this->findOptionalValueInVector($vector, self::ENVIRONMENTAL_AVAILABILITY_REQUIREMENT));
+        $cvssObject->confidentialityRequirement = self::parseConfidentialityIntegrityOrAvailabilityRequirements(self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_CONFIDENTIALITY_REQUIREMENT));
+        $cvssObject->integrityRequirement = self::parseConfidentialityIntegrityOrAvailabilityRequirements(self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_INTEGRITY_REQUIREMENT));
+        $cvssObject->availabilityRequirement = self::parseConfidentialityIntegrityOrAvailabilityRequirements(self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_AVAILABILITY_REQUIREMENT));
 
-        $modifiedAttackVectorValue = $this->findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_ATTACK_VECTOR);
-        $modifiedAttackComplexityValue = $this->findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_ATTACK_COMPLEXITY);
-        $modifiedPrivilegesRequiredValue = $this->findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_PRIVILEGES_REQUIRED);
-        $modifiedUserInteractionValue = $this->findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_USER_INTERACTION);
-        $modifiedConfidentialityValue = $this->findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_CONFIDENTIALITY);
-        $modifiedIntegrityValue = $this->findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_INTEGRITY);
-        $modifiedAvailabilityValue = $this->findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_AVAILABILITY);
+        $modifiedAttackVectorValue = self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_ATTACK_VECTOR);
+        $modifiedAttackComplexityValue = self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_ATTACK_COMPLEXITY);
+        $modifiedPrivilegesRequiredValue = self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_PRIVILEGES_REQUIRED);
+        $modifiedUserInteractionValue = self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_USER_INTERACTION);
+        $modifiedConfidentialityValue = self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_CONFIDENTIALITY);
+        $modifiedIntegrityValue = self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_INTEGRITY);
+        $modifiedAvailabilityValue = self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_AVAILABILITY);
 
         if ($modifiedAttackVectorValue && $modifiedAttackVectorValue !== self::NOT_DEFINED) {
-            $cvssObject->modifiedAttackVector = $this->parseAttackVector($modifiedAttackVectorValue);
+            $cvssObject->modifiedAttackVector = self::parseAttackVector($modifiedAttackVectorValue);
         }
 
         if ($modifiedAttackComplexityValue && $modifiedAttackComplexityValue !== self::NOT_DEFINED) {
-            $cvssObject->modifiedAttackComplexity = $this->parseAttackComplexity($modifiedAttackComplexityValue);
+            $cvssObject->modifiedAttackComplexity = self::parseAttackComplexity($modifiedAttackComplexityValue);
         }
 
         if ($modifiedPrivilegesRequiredValue && $modifiedPrivilegesRequiredValue !== self::NOT_DEFINED) {
-            $cvssObject->modifiedPrivilegesRequired = $this->parsePrivilegesRequired($modifiedPrivilegesRequiredValue, $cvssObject->modifiedScope);
+            $cvssObject->modifiedPrivilegesRequired = self::parsePrivilegesRequired($modifiedPrivilegesRequiredValue, $cvssObject->modifiedScope);
         }
 
         if ($modifiedUserInteractionValue && $modifiedUserInteractionValue !== self::NOT_DEFINED) {
-            $cvssObject->modifiedUserInteraction = $this->parseUserInteraction($modifiedUserInteractionValue);
+            $cvssObject->modifiedUserInteraction = self::parseUserInteraction($modifiedUserInteractionValue);
         }
 
         if ($modifiedConfidentialityValue && $modifiedConfidentialityValue !== self::NOT_DEFINED) {
-            $cvssObject->modifiedConfidentiality = $this->parseConfidentialityIntegrityOrAvailability($modifiedConfidentialityValue);
+            $cvssObject->modifiedConfidentiality = self::parseConfidentialityIntegrityOrAvailability($modifiedConfidentialityValue);
         }
 
         if ($modifiedIntegrityValue && $modifiedIntegrityValue !== self::NOT_DEFINED) {
-            $cvssObject->modifiedIntegrity = $this->parseConfidentialityIntegrityOrAvailability($modifiedIntegrityValue);
+            $cvssObject->modifiedIntegrity = self::parseConfidentialityIntegrityOrAvailability($modifiedIntegrityValue);
         }
 
         if ($modifiedAvailabilityValue && $modifiedAvailabilityValue !== self::NOT_DEFINED) {
-            $cvssObject->modifiedAvailability = $this->parseConfidentialityIntegrityOrAvailability($modifiedAvailabilityValue);
+            $cvssObject->modifiedAvailability = self::parseConfidentialityIntegrityOrAvailability($modifiedAvailabilityValue);
         }
 
         return $cvssObject;
     }
 
-    private function findValueInVector(string $vector, string $section): string
+    private static function findValueInVector(string $vector, string $section): string
     {
         $regex = '/(?<=\/' . $section . ':)(.)/';
         preg_match($regex, $vector, $matches);
@@ -156,7 +156,7 @@ class Cvss31Parser
         return $matches[0];
     }
 
-    private function findOptionalValueInVector(string $vector, string $section): ?string
+    private static function findOptionalValueInVector(string $vector, string $section): ?string
     {
         $regex = '/(?<=\/' . $section . ':)(.)/';
         preg_match($regex, $vector, $matches);
@@ -164,7 +164,7 @@ class Cvss31Parser
         return $matches[0] ?? null;
     }
 
-    private function parseAttackVector(string $value): float
+    private static function parseAttackVector(string $value): float
     {
         switch ($value) {
             case self::NETWORK:
@@ -183,7 +183,7 @@ class Cvss31Parser
         throw CvssException::invalidValue();
     }
 
-    private function parseAttackComplexity(string $value): float
+    private static function parseAttackComplexity(string $value): float
     {
         switch ($value) {
             case self::LOW:
@@ -196,7 +196,7 @@ class Cvss31Parser
         throw CvssException::invalidValue();
     }
 
-    private function parsePrivilegesRequired(string $value, string $scope): float
+    private static function parsePrivilegesRequired(string $value, string $scope): float
     {
         switch ($value) {
             case self::NONE:
@@ -212,7 +212,7 @@ class Cvss31Parser
         throw CvssException::invalidValue();
     }
 
-    private function parseUserInteraction(string $value): float
+    private static function parseUserInteraction(string $value): float
     {
         switch ($value) {
             case self::NONE:
@@ -225,7 +225,7 @@ class Cvss31Parser
         throw CvssException::invalidValue();
     }
 
-    private function parseConfidentialityIntegrityOrAvailability(string $value): float
+    private static function parseConfidentialityIntegrityOrAvailability(string $value): float
     {
         switch ($value) {
             case self::HIGH:
@@ -241,7 +241,7 @@ class Cvss31Parser
         throw CvssException::invalidValue();
     }
 
-    private function parseExploitCodeMaturity(?string $value): float
+    private static function parseExploitCodeMaturity(?string $value): float
     {
         switch ($value) {
             case self::FUNCTIONAL:
@@ -258,7 +258,7 @@ class Cvss31Parser
         }
     }
 
-    private function parseRemediationLevel(?string $value): float
+    private static function parseRemediationLevel(?string $value): float
     {
         switch ($value) {
             case self::WORKAROUND:
@@ -275,7 +275,7 @@ class Cvss31Parser
         }
     }
 
-    private function parseReportConfidence(?string $value): float
+    private static function parseReportConfidence(?string $value): float
     {
         switch ($value) {
             case self::REASONABLE:
@@ -289,7 +289,7 @@ class Cvss31Parser
         }
     }
 
-    private function parseConfidentialityIntegrityOrAvailabilityRequirements(?string $value): float
+    private static function parseConfidentialityIntegrityOrAvailabilityRequirements(?string $value): float
     {
         switch ($value) {
             case self::HIGH:
