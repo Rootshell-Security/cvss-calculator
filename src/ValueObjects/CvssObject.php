@@ -6,6 +6,7 @@ namespace Rootshell\Cvss\ValueObjects;
 
 class CvssObject
 {
+    public const VERSION_2 = '2';
     public const VERSION_31 = '3.1';
     public const VERSION_30 = '3.0';
     public const SCOPE_UNCHANGED = 'U';
@@ -19,7 +20,13 @@ class CvssObject
 
     public float $attackVector;
 
+    public float $accessVector;
+
     public float $attackComplexity;
+
+    public float $accessComplexity;
+
+    public float $authentication;
 
     public float $privilegesRequired;
 
@@ -72,6 +79,10 @@ class CvssObject
     public float $modifiedImpact;
 
     public float $modifiedExploitability;
+
+    public float $collateralDamagePotential;
+
+    public float $targetDistribution;
 
     public float $environmentalScore;
 

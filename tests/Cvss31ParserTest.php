@@ -136,40 +136,31 @@ class Cvss31ParserTest extends TestCase
     public function testParseBaseValues(): void
     {
         $method = self::getMethod('parseBaseValues');
-        /*
-         * @var \App\ValueObjects\CvssObject $result
-         */
         $result = $method->invokeArgs($this->parser, ['CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N', new CvssObject]);
 
-        $this->assertEquals(0.85, $result->attackVector);
-        $this->assertEquals(0.44, $result->attackComplexity);
-        $this->assertEquals(0.85, $result->privilegesRequired);
-        $this->assertEquals(0.85, $result->userInteraction);
-        $this->assertEquals('U', $result->scope);
-        $this->assertEquals(0.56, $result->confidentiality);
-        $this->assertEquals(0.22, $result->integrity);
-        $this->assertEquals(0, $result->availability);
+        self::assertEquals(0.85, $result->attackVector);
+        self::assertEquals(0.44, $result->attackComplexity);
+        self::assertEquals(0.85, $result->privilegesRequired);
+        self::assertEquals(0.85, $result->userInteraction);
+        self::assertEquals('U', $result->scope);
+        self::assertEquals(0.56, $result->confidentiality);
+        self::assertEquals(0.22, $result->integrity);
+        self::assertEquals(0, $result->availability);
     }
 
     public function testParseTemporalValues(): void
     {
         $method = self::getMethod('parseTemporalValues');
-        /*
-         * @var \App\ValueObjects\CvssObject $result
-         */
         $result = $method->invokeArgs($this->parser, ['CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H/E:H/RL:T/RC:C', new CvssObject]);
 
-        $this->assertEquals(1, $result->exploitCodeMaturity);
-        $this->assertEquals(0.96, $result->remediationLevel);
-        $this->assertEquals(1, $result->reportConfidence);
+        self::assertEquals(1, $result->exploitCodeMaturity);
+        self::assertEquals(0.96, $result->remediationLevel);
+        self::assertEquals(1, $result->reportConfidence);
     }
 
     public function testParseEnvironmentalValuesFull(): void
     {
         $method = self::getMethod('parseEnvironmentalValues');
-        /*
-         * @var \App\ValueObjects\CvssObject $result
-         */
         $result = $method->invokeArgs(
             $this->parser,
             [
@@ -178,47 +169,47 @@ class Cvss31ParserTest extends TestCase
             ]
         );
 
-        $this->assertEquals(1, $result->confidentialityRequirement);
-        $this->assertEquals(0.5, $result->integrityRequirement);
-        $this->assertEquals(1.5, $result->availabilityRequirement);
-        $this->assertEquals(0.62, $result->modifiedAttackVector);
-        $this->assertEquals(0.77, $result->modifiedAttackComplexity);
-        $this->assertEquals(0.85, $result->modifiedPrivilegesRequired);
-        $this->assertEquals(0.62, $result->modifiedUserInteraction);
-        $this->assertEquals('C', $result->modifiedScope);
-        $this->assertEquals(0.56, $result->modifiedConfidentiality);
-        $this->assertEquals(0.22, $result->modifiedIntegrity);
-        $this->assertEquals(0, $result->modifiedAvailability);
+        self::assertEquals(1, $result->confidentialityRequirement);
+        self::assertEquals(0.5, $result->integrityRequirement);
+        self::assertEquals(1.5, $result->availabilityRequirement);
+        self::assertEquals(0.62, $result->modifiedAttackVector);
+        self::assertEquals(0.77, $result->modifiedAttackComplexity);
+        self::assertEquals(0.85, $result->modifiedPrivilegesRequired);
+        self::assertEquals(0.62, $result->modifiedUserInteraction);
+        self::assertEquals('C', $result->modifiedScope);
+        self::assertEquals(0.56, $result->modifiedConfidentiality);
+        self::assertEquals(0.22, $result->modifiedIntegrity);
+        self::assertEquals(0, $result->modifiedAvailability);
     }
 
     public function testParseVectorFull(): void
     {
-        $result = $this->parser->parseVector('CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H/E:H/RL:T/RC:C/CR:M/IR:L/AR:H/MAV:A/MAC:L/MPR:N/MUI:R/MS:C/MC:H/MI:L/MA:N');
+        $result = Cvss31Parser::parseVector('CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H/E:H/RL:T/RC:C/CR:M/IR:L/AR:H/MAV:A/MAC:L/MPR:N/MUI:R/MS:C/MC:H/MI:L/MA:N');
 
-        $this->assertEquals(0.85, $result->attackVector);
-        $this->assertEquals(0.44, $result->attackComplexity);
-        $this->assertEquals(0.85, $result->privilegesRequired);
-        $this->assertEquals(0.85, $result->userInteraction);
-        $this->assertEquals('U', $result->scope);
-        $this->assertEquals(0.56, $result->confidentiality);
-        $this->assertEquals(0.56, $result->integrity);
-        $this->assertEquals(0.56, $result->availability);
+        self::assertEquals(0.85, $result->attackVector);
+        self::assertEquals(0.44, $result->attackComplexity);
+        self::assertEquals(0.85, $result->privilegesRequired);
+        self::assertEquals(0.85, $result->userInteraction);
+        self::assertEquals('U', $result->scope);
+        self::assertEquals(0.56, $result->confidentiality);
+        self::assertEquals(0.56, $result->integrity);
+        self::assertEquals(0.56, $result->availability);
 
-        $this->assertEquals(1, $result->exploitCodeMaturity);
-        $this->assertEquals(0.96, $result->remediationLevel);
-        $this->assertEquals(1, $result->reportConfidence);
+        self::assertEquals(1, $result->exploitCodeMaturity);
+        self::assertEquals(0.96, $result->remediationLevel);
+        self::assertEquals(1, $result->reportConfidence);
 
-        $this->assertEquals(1, $result->confidentialityRequirement);
-        $this->assertEquals(0.5, $result->integrityRequirement);
-        $this->assertEquals(1.5, $result->availabilityRequirement);
-        $this->assertEquals(0.62, $result->modifiedAttackVector);
-        $this->assertEquals(0.77, $result->modifiedAttackComplexity);
-        $this->assertEquals(0.85, $result->modifiedPrivilegesRequired);
-        $this->assertEquals(0.62, $result->modifiedUserInteraction);
-        $this->assertEquals('C', $result->modifiedScope);
-        $this->assertEquals(0.56, $result->modifiedConfidentiality);
-        $this->assertEquals(0.22, $result->modifiedIntegrity);
-        $this->assertEquals(0, $result->modifiedAvailability);
+        self::assertEquals(1, $result->confidentialityRequirement);
+        self::assertEquals(0.5, $result->integrityRequirement);
+        self::assertEquals(1.5, $result->availabilityRequirement);
+        self::assertEquals(0.62, $result->modifiedAttackVector);
+        self::assertEquals(0.77, $result->modifiedAttackComplexity);
+        self::assertEquals(0.85, $result->modifiedPrivilegesRequired);
+        self::assertEquals(0.62, $result->modifiedUserInteraction);
+        self::assertEquals('C', $result->modifiedScope);
+        self::assertEquals(0.56, $result->modifiedConfidentiality);
+        self::assertEquals(0.22, $result->modifiedIntegrity);
+        self::assertEquals(0, $result->modifiedAvailability);
     }
 
     public function testFindValueInVectorFail(): void

@@ -44,6 +44,16 @@ class CvssTest extends TestCase
             ['CVSS:3.0/AV:A/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H/CR:M/IR:M/AR:M/MAV:A/MAC:H/MUI:R/MS:U/MC:L/MI:L/MA:L', 8.0, 8.0, 4.3],
             ['CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H/E:U/RL:T/RC:U/CR:L/IR:L/AR:H/MAV:P/MAC:H/MPR:H/MUI:R/MS:C/MC:L/MI:H/MA:H', 10.0, 8.1, 5.6],
             ['CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H/E:U/RL:T/RC:U/CR:L/IR:L/AR:H/MAV:P/MAC:H/MPR:H/MUI:R/MS:C/MC:H/MI:H/MA:H', 10.0, 8.1, 5.5],
+
+            ['CVSS:2/AV:N/AC:L/Au:N/C:C/I:C/A:C', 10.0, 10.0, 10.0],
+            ['CVSS:2/AV:N/AC:L/Au:N/C:C/I:C/A:C/E:U/RL:OF/RC:UC', 10.0, 6.7, 6.7],
+            ['CVSS:2/AV:N/AC:L/Au:N/C:C/I:C/A:C/E:U/RL:OF/RC:UC/CDP:L/TD:L/CR:M/IR:M/AR:M', 10.0, 6.7, 1.7],
+            ['CVSS:2/AV:N/AC:L/Au:N/C:N/I:N/A:C/E:F/RL:OF/RC:C/CDP:H/TD:H/CR:M/IR:M/AR:H', 7.8, 6.4, 9.1],
+            ['CVSS:2/AV:N/AC:L/Au:N/C:C/I:C/A:C/E:F/RL:OF/RC:C/CDP:H/TD:H/CR:M/IR:M/AR:L', 10.0, 8.3, 9.0],
+            ['CVSS:2/AV:L/AC:H/Au:N/C:C/I:C/A:C/E:POC/RL:OF/RC:C/CDP:H/TD:H/CR:M/IR:M/AR:M', 6.2, 4.9, 7.4],
+            ['AV:N/AC:L/Au:N/C:C/I:C/A:C', 10.0, 10.0, 10.0],
+            ['AV:N/AC:L/Au:N/C:C/I:C/A:C/E:U/RL:OF/RC:UC', 10.0, 6.7, 6.7],
+            ['AV:L/AC:H/Au:N/C:C/I:C/A:C/E:POC/RL:OF/RC:C/CDP:H/TD:H/CR:M/IR:M/AR:M', 6.2, 4.9, 7.4],
         ];
     }
 
