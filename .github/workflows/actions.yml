@@ -1,4 +1,4 @@
-name: PHP Actions
+name: Build
 
 on:
   push:
