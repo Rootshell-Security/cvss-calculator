@@ -5,6 +5,7 @@
 [![Software License][badge-license]][license]
 [![PHP Version][badge-php]][php]
 [![Coverage Status][badge-coverage]][coverage]
+![Build][badge-build]
 
 rootshell/cvss-calculator is a PHP library for translating a CVSS security vector into its relative score. Current support is for CVSS2, CVSS3 and CVSS3.1.
 
@@ -57,6 +58,7 @@ information.
 [badge-license]: https://img.shields.io/packagist/l/rootshell/cvss-calculator.svg?style=flat-square
 [badge-php]: https://img.shields.io/packagist/php-v/rootshell/cvss-calculator.svg?style=flat-square
 [badge-coverage]: https://coveralls.io/repos/github/Rootshell-Security/cvss-calculator/badge.svg?branch=master
+[badge-build]: https://github.com/Rootshell-Security/cvss-calculator/workflows/Build/badge.svg?branch=master
 
 [source]: https://github.com/Rootshell-Security/cvss-calculator
 [release]: https://packagist.org/packages/rootshell/cvss-calculator
