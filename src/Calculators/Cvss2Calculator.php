@@ -29,7 +29,7 @@ class Cvss2Calculator implements CvssCalculator
 
     public function calculateFImpact(CvssObject $cvssObject): float
     {
-        return $cvssObject->impact === 0 ?: 1.176;
+        return $cvssObject->impact === 0.0 ? 0.0 : 1.176;
     }
 
     public function calculateTemporalScore(CvssObject $cvssObject): float

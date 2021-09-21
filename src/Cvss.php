@@ -49,6 +49,8 @@ class Cvss
             case CvssObject::VERSION_31:
                 return new Cvss31Calculator();
         }
+
+        throw CvssException::invalidVector();
     }
 
     private static function validateVector(string $vector): bool
