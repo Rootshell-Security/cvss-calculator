@@ -14,9 +14,9 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "infection/infection": "^0.17.3",
     "php-coveralls/php-coveralls": "^2.2",
-    "phpunit/phpunit": "^9.3"
+    "phpunit/phpunit": "^9.3",
+    "vimeo/psalm": "^4.10"
   },
   "config": {
     "sort-packages": true
