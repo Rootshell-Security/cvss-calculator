@@ -35,6 +35,40 @@ class Cvss31CalculatorTest extends TestCase
         $this->assertEquals(4.6, $result);
     }
 
+    public function testBaseScoreUnchangedScopeMax(): void
+    {
+        $cvssObject = new CvssObject;
+        $cvssObject->confidentiality = 0.56;
+        $cvssObject->integrity = 0.56;
+        $cvssObject->availability = 0.56;
+        $cvssObject->scope = 'U';
+        $cvssObject->attackVector = 0.85;
+        $cvssObject->attackComplexity = 0.77;
+        $cvssObject->privilegesRequired = 0.85;
+        $cvssObject->userInteraction = 0.85;
+
+        $result = $this->calculator->calculateBaseScore($cvssObject);
+
+        $this->assertEquals(9.8, $result);
+    }
+
+    public function testBaseScoreUnchangedScopeOverflow(): void
+    {
+        $cvssObject = new CvssObject;
+        $cvssObject->confidentiality = 0.90;
+        $cvssObject->integrity = 0.90;
+        $cvssObject->availability = 0.90;
+        $cvssObject->scope = 'U';
+        $cvssObject->attackVector = 0.90;
+        $cvssObject->attackComplexity = 0.90;
+        $cvssObject->privilegesRequired = 0.90;
+        $cvssObject->userInteraction = 0.90;
+
+        $result = $this->calculator->calculateBaseScore($cvssObject);
+
+        $this->assertEquals(10, $result);
+    }
+
     public function testBaseScoreChangedScope(): void
     {
         $cvssObject = new CvssObject;
@@ -50,6 +84,42 @@ class Cvss31CalculatorTest extends TestCase
         $result = $this->calculator->calculateBaseScore($cvssObject);
 
         $this->assertEquals(5.4, $result);
+    }
+
+    public function testBaseScoreChangedScopeMax(): void
+    {
+        $cvssObject = new CvssObject;
+        $cvssObject->confidentiality = 0.56;
+        $cvssObject->integrity = 0.56;
+        $cvssObject->availability = 0.56;
+        $cvssObject->scope = 'C';
+        $cvssObject->attackVector = 0.85;
+        $cvssObject->attackComplexity = 0.77;
+        $cvssObject->privilegesRequired = 0.85;
+        $cvssObject->userInteraction = 0.85;
+
+        $result = $this->calculator->calculateBaseScore($cvssObject);
+
+        $this->assertEquals(10.0, $result);
+    }
+
+    public function testImpactScore(): void
+    {
+        $cvssObject = new CvssObject;
+        $cvssObject->confidentiality = 0.56;
+        $cvssObject->integrity = 0.56;
+        $cvssObject->availability = 0.56;
+        $cvssObject->scope = 'C';
+        $cvssObject->attackVector = 0.85;
+        $cvssObject->attackComplexity = 0.44;
+        $cvssObject->privilegesRequired = 0.62;
+        $cvssObject->userInteraction = 0.62;
+
+        $result = $this->calculator->calculateBaseScore($cvssObject);
+
+        $this->assertEquals(0.9148160000000001, $cvssObject->impactSubScore);
+        $this->assertEquals(6.04773049154, $cvssObject->impact);
+
     }
 
     public function testTemporalScore(): void
@@ -87,6 +157,50 @@ class Cvss31CalculatorTest extends TestCase
         $this->assertEquals(5.2, $result);
     }
 
+    public function testEnvironmentalScoreUnchangedScopeMax(): void
+    {
+        $cvssObject = new CvssObject;
+        $cvssObject->exploitCodeMaturity = 1;
+        $cvssObject->remediationLevel = 1;
+        $cvssObject->reportConfidence = 1;
+        $cvssObject->confidentialityRequirement = 1.5;
+        $cvssObject->integrityRequirement = 1.5;
+        $cvssObject->availabilityRequirement = 1.5;
+        $cvssObject->modifiedScope = 'U';
+        $cvssObject->modifiedAttackVector = 0.85;
+        $cvssObject->modifiedAttackComplexity = 0.77;
+        $cvssObject->modifiedPrivilegesRequired = 0.85;
+        $cvssObject->modifiedUserInteraction = 0.85;
+        $cvssObject->modifiedConfidentiality = 0.56;
+        $cvssObject->modifiedIntegrity = 0.56;
+        $cvssObject->modifiedAvailability = 0.56;
+
+        $result = $this->calculator->calculateEnvironmentalScore($cvssObject);
+        $this->assertEquals(9.8, $result);
+    }
+
+    public function testEnvironmentalScoreUnchangedScopeOverflow(): void
+    {
+        $cvssObject = new CvssObject;
+        $cvssObject->exploitCodeMaturity = 1;
+        $cvssObject->remediationLevel = 1;
+        $cvssObject->reportConfidence = 1;
+        $cvssObject->confidentialityRequirement = 1.8;
+        $cvssObject->integrityRequirement = 1.8;
+        $cvssObject->availabilityRequirement = 1.8;
+        $cvssObject->modifiedScope = 'U';
+        $cvssObject->modifiedAttackVector = 0.9;
+        $cvssObject->modifiedAttackComplexity = 0.87;
+        $cvssObject->modifiedPrivilegesRequired = 0.95;
+        $cvssObject->modifiedUserInteraction = 0.95;
+        $cvssObject->modifiedConfidentiality = 0.66;
+        $cvssObject->modifiedIntegrity = 0.66;
+        $cvssObject->modifiedAvailability = 0.66;
+
+        $result = $this->calculator->calculateEnvironmentalScore($cvssObject);
+        $this->assertEquals(10, $result);
+    }
+
     public function testEnvironmentalScoreChangedScope(): void
     {
         $cvssObject = new CvssObject;
@@ -107,5 +221,49 @@ class Cvss31CalculatorTest extends TestCase
 
         $result = $this->calculator->calculateEnvironmentalScore($cvssObject);
         $this->assertEquals(5.9, $result);
+    }
+
+    public function testEnvironmentalScoreChangedScopeMax(): void
+    {
+        $cvssObject = new CvssObject;
+        $cvssObject->exploitCodeMaturity = 1;
+        $cvssObject->remediationLevel = 1;
+        $cvssObject->reportConfidence = 1;
+        $cvssObject->confidentialityRequirement = 1.5;
+        $cvssObject->integrityRequirement = 1.5;
+        $cvssObject->availabilityRequirement = 1.5;
+        $cvssObject->modifiedScope = 'C';
+        $cvssObject->modifiedAttackVector = 0.85;
+        $cvssObject->modifiedAttackComplexity = 0.77;
+        $cvssObject->modifiedPrivilegesRequired = 0.85;
+        $cvssObject->modifiedUserInteraction = 0.85;
+        $cvssObject->modifiedConfidentiality = 0.56;
+        $cvssObject->modifiedIntegrity = 0.56;
+        $cvssObject->modifiedAvailability = 0.56;
+
+        $result = $this->calculator->calculateEnvironmentalScore($cvssObject);
+        $this->assertEquals(10, $result);
+    }
+
+    public function testEnvironmentalScoreChangedScopeOverflow(): void
+    {
+        $cvssObject = new CvssObject;
+        $cvssObject->exploitCodeMaturity = 1;
+        $cvssObject->remediationLevel = 1;
+        $cvssObject->reportConfidence = 1;
+        $cvssObject->confidentialityRequirement = 1.8;
+        $cvssObject->integrityRequirement = 1.8;
+        $cvssObject->availabilityRequirement = 1.8;
+        $cvssObject->modifiedScope = 'C';
+        $cvssObject->modifiedAttackVector = 0.9;
+        $cvssObject->modifiedAttackComplexity = 0.87;
+        $cvssObject->modifiedPrivilegesRequired = 0.95;
+        $cvssObject->modifiedUserInteraction = 0.95;
+        $cvssObject->modifiedConfidentiality = 0.66;
+        $cvssObject->modifiedIntegrity = 0.66;
+        $cvssObject->modifiedAvailability = 0.66;
+
+        $result = $this->calculator->calculateEnvironmentalScore($cvssObject);
+        $this->assertEquals(10, $result);
     }
 }

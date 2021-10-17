@@ -29,12 +29,12 @@ abstract class AbstractCvss3Calculator implements CvssCalculator
         return $this->roundUp(min(1.08 * ($cvssObject->impact + $cvssObject->exploitability), 10));
     }
 
-    public function calculateImpactSubScore(CvssObject $cvssObject): float
+    private function calculateImpactSubScore(CvssObject $cvssObject): float
     {
         return 1 - ((1 - $cvssObject->confidentiality) * (1 - $cvssObject->integrity) * (1 - $cvssObject->availability));
     }
 
-    public function calculateImpact(CvssObject $cvssObject): float
+    private function calculateImpact(CvssObject $cvssObject): float
     {
         if ($cvssObject->scope === CvssObject::SCOPE_UNCHANGED) {
             return 6.42 * $cvssObject->impactSubScore;
@@ -43,7 +43,7 @@ abstract class AbstractCvss3Calculator implements CvssCalculator
         return 7.52 * ($cvssObject->impactSubScore - 0.029) - 3.25 * (($cvssObject->impactSubScore - 0.02) ** 15);
     }
 
-    public function calculateExploitability(CvssObject $cvssObject): float
+    private function calculateExploitability(CvssObject $cvssObject): float
     {
         return 8.22 * $cvssObject->attackVector * $cvssObject->attackComplexity * $cvssObject->privilegesRequired * $cvssObject->userInteraction;
     }
@@ -53,7 +53,7 @@ abstract class AbstractCvss3Calculator implements CvssCalculator
         return $this->roundUp($cvssObject->baseScore * $cvssObject->exploitCodeMaturity * $cvssObject->remediationLevel * $cvssObject->reportConfidence);
     }
 
-    public function calculateModifiedExploitability(CvssObject $cvssObject): float
+    private function calculateModifiedExploitability(CvssObject $cvssObject): float
     {
         return 8.22 * $cvssObject->modifiedAttackVector * $cvssObject->modifiedAttackComplexity * $cvssObject->modifiedPrivilegesRequired * $cvssObject->modifiedUserInteraction;
     }
