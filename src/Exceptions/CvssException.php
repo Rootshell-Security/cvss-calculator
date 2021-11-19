@@ -10,15 +10,15 @@ class CvssException extends Exception
 {
     public static function invalidValue(): self
     {
-        return new static('Value could not be parsed', 403);
+        return new self('Value could not be parsed', 403);
     }
 
     public static function missingValue(): self
     {
-        return new static('Missing value', 403);
+        return new self('Missing value', 403);
     }
     public static function invalidVector(): self
     {
-        return new static('The vector you have provided is invalid', 403);
+        return new self('The vector you have provided is invalid', 403);
     }
 }

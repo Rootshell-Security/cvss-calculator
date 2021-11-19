@@ -14,9 +14,10 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "infection/infection": "^0.17.3",
+    "infection/infection": "^0.25.2",
     "php-coveralls/php-coveralls": "^2.2",
-    "phpunit/phpunit": "^9.3"
+    "phpunit/phpunit": "^9.3",
+    "vimeo/psalm": "^4.10"
   },
   "config": {
     "sort-packages": true
@@ -32,10 +33,12 @@
     }
   },
   "scripts": {
+    "psalm": "psalm --show-info=false",
     "phpunit": "phpunit --verbose --colors=always",
     "phpunit-coverage": "phpunit --verbose --colors=always --coverage-html build/coverage",
     "test": [
-        "@phpunit"
+        "@phpunit",
+        "@psalm"
     ]
   },
   "support": {

@@ -76,4 +76,31 @@ class CvssTest extends TestCase
             ['CVSS:1/AV:P/AC:H/PR:N/UI:R/S:C/C:L/I:H/A:N'],
         ];
     }
+
+    /**
+     * @dataProvider invalidVersionProvider
+     */
+    public function testInvalidCalculator(): void
+    {
+        $this->expectExceptionCode(CvssException::class);
+        $this->expectExceptionMessage('The vector you have provided is invalid');
+        $this->expectExceptionCode(403);
+        
+        $reflectCvss = new \ReflectionClass(Cvss::class);
+        $method = $reflectCvss->getMethod('buildCalculator');
+        $method->setAccessible(true);
+        
+        $cvs = new Cvss();
+        $method->invokeArgs($cvs, ['version' => 1]);
+    }
+    
+    public function invalidVersionProvider(): array
+    {
+        return [
+            [1],
+            [3.2],
+            [4],
+            [5],
+        ];
+    }
 }

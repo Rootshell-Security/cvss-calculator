@@ -121,7 +121,7 @@ class Cvss2Parser
         return $matches[0] ?? null;
     }
 
-    public static function parseAccessVector(string $value): float
+    private static function parseAccessVector(string $value): float
     {
         switch ($value) {
             case self::NETWORK:
@@ -137,7 +137,7 @@ class Cvss2Parser
         throw CvssException::invalidValue();
     }
 
-    public static function parseAccessComplexity(string $value): float
+    private static function parseAccessComplexity(string $value): float
     {
         switch ($value) {
             case self::HIGH:
@@ -153,7 +153,7 @@ class Cvss2Parser
         throw CvssException::invalidValue();
     }
 
-    public static function parseAuthentication(string $value): float
+    private static function parseAuthentication(string $value): float
     {
         switch ($value) {
             case self::MULTIPLE:
@@ -169,7 +169,7 @@ class Cvss2Parser
         throw CvssException::invalidValue();
     }
 
-    public static function parseConfidentialityIntegrityAvailabilityImpact(string $value): float
+    private static function parseConfidentialityIntegrityAvailabilityImpact(string $value): float
     {
         switch ($value) {
             case self::COMPLETE:
@@ -185,7 +185,7 @@ class Cvss2Parser
         throw CvssException::invalidValue();
     }
 
-    public static function parseExploitability(?string $value): float
+    private static function parseExploitability(?string $value): float
     {
         switch ($value) {
             case self::UNPROVEN:
@@ -202,7 +202,7 @@ class Cvss2Parser
         }
     }
 
-    public static function parseRemediationLevel(?string $value): float
+    private static function parseRemediationLevel(?string $value): float
     {
         switch ($value) {
             case self::OFFICIAL_FIX:
@@ -219,7 +219,7 @@ class Cvss2Parser
         }
     }
 
-    public static function parseReportConfidence(?string $value): float
+    private static function parseReportConfidence(?string $value): float
     {
         switch ($value) {
             case self::UNCONFIRMED:
@@ -233,7 +233,7 @@ class Cvss2Parser
         }
     }
 
-    public static function parseCollateralDamagePotential(?string $value): float
+    private static function parseCollateralDamagePotential(?string $value): float
     {
         switch ($value) {
             case self::LOW:
@@ -253,7 +253,7 @@ class Cvss2Parser
         }
     }
 
-    public static function parseTargetDistribution(?string $value): float
+    private static function parseTargetDistribution(?string $value): float
     {
         switch ($value) {
             case self::NONE:
@@ -270,7 +270,7 @@ class Cvss2Parser
         }
     }
 
-    public static function parseSecurityRequirements(?string $value): float
+    private static function parseSecurityRequirements(?string $value): float
     {
         switch ($value) {
             case self::LOW:

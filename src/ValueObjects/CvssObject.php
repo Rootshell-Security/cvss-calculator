@@ -12,79 +12,79 @@ class CvssObject
     public const SCOPE_UNCHANGED = 'U';
     public const SCOPE_CHANGED = 'C';
 
-    public string $version;
+    public string $version = self::VERSION_31;
 
-    public string $scope;
+    public string $scope = self::SCOPE_UNCHANGED;
 
-    public string $modifiedScope;
+    public string $modifiedScope = self::SCOPE_UNCHANGED;
 
-    public float $attackVector;
+    public float $attackVector = 0.0;
 
-    public float $accessVector;
+    public float $accessVector = 0.0;
 
-    public float $attackComplexity;
+    public float $attackComplexity = 0.0;
 
-    public float $accessComplexity;
+    public float $accessComplexity = 0.0;
 
-    public float $authentication;
+    public float $authentication = 0.0;
 
-    public float $privilegesRequired;
+    public float $privilegesRequired = 0.0;
 
-    public float $userInteraction;
+    public float $userInteraction = 0.0;
 
-    public float $confidentiality;
+    public float $confidentiality = 0.0;
 
-    public float $integrity;
+    public float $integrity = 0.0;
 
-    public float $availability;
+    public float $availability = 0.0;
 
-    public float $impact;
+    public float $impact = 0.0;
 
-    public float $exploitability;
+    public float $exploitability = 0.0;
 
-    public float $impactSubScore;
+    public float $impactSubScore = 0.0;
 
-    public float $baseScore;
+    public float $baseScore = 0.0;
 
-    public float $exploitCodeMaturity;
+    public float $exploitCodeMaturity = 0.0;
 
-    public float $remediationLevel;
+    public float $remediationLevel = 0.0;
 
-    public float $reportConfidence;
+    public float $reportConfidence = 0.0;
 
-    public float $temporalScore;
+    public float $temporalScore = 0.0;
 
-    public float $confidentialityRequirement;
+    public float $confidentialityRequirement = 0.0;
 
-    public float $integrityRequirement;
+    public float $integrityRequirement = 0.0;
 
-    public float $availabilityRequirement;
+    public float $availabilityRequirement = 0.0;
 
-    public float $modifiedAttackVector;
+    public float $modifiedAttackVector = 0.0;
 
-    public float $modifiedAttackComplexity;
+    public float $modifiedAttackComplexity = 0.0;
 
-    public float $modifiedPrivilegesRequired;
+    public float $modifiedPrivilegesRequired = 0.0;
 
-    public float $modifiedUserInteraction;
+    public float $modifiedUserInteraction = 0.0;
 
-    public float $modifiedConfidentiality;
+    public float $modifiedConfidentiality = 0.0;
 
-    public float $modifiedIntegrity;
+    public float $modifiedIntegrity = 0.0;
 
-    public float $modifiedAvailability;
+    public float $modifiedAvailability = 0.0;
 
-    public float $modifiedImpactSubScore;
+    public float $modifiedImpactSubScore = 0.0;
 
-    public float $modifiedImpact;
+    public float $modifiedImpact = 0.0;
 
-    public float $modifiedExploitability;
+    public float $modifiedExploitability = 0.0;
 
-    public float $collateralDamagePotential;
+    public float $collateralDamagePotential = 0.0;
 
-    public float $targetDistribution;
+    public float $targetDistribution = 0.0;
 
-    public float $environmentalScore;
+    public float $environmentalScore = 0.0;
 
     public function getResults(): CvssResults
     {
