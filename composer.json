@@ -10,17 +10,20 @@
   ],
   "license": "MIT",
   "require": {
-    "php": "^7.4 || ^8",
+    "php": "^8",
     "ext-json": "*"
   },
   "require-dev": {
-    "infection/infection": "^0.25.2",
-    "php-coveralls/php-coveralls": "^2.2",
-    "phpunit/phpunit": "^9.3",
-    "vimeo/psalm": "^4.10"
+    "infection/infection": "^0.26.16",
+    "php-coveralls/php-coveralls": "^2.5.3",
+    "phpunit/phpunit": "^9.5.26",
+    "vimeo/psalm": "^5.1.0"
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "infection/extension-installer": true
+    }
   },
   "autoload": {
     "psr-4": {
