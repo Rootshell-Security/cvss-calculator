@@ -118,7 +118,7 @@ class Cvss31CalculatorTest extends TestCase
         $result = $this->calculator->calculateBaseScore($cvssObject);
 
         $this->assertEquals(0.9148160000000001, $cvssObject->impactSubScore);
-        $this->assertEquals(6.04773049154, $cvssObject->impact);
+        $this->assertEquals(6.0477304915445185, $cvssObject->impact);
 
     }
 
