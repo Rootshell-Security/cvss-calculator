@@ -123,165 +123,101 @@ class Cvss2Parser
 
     private static function parseAccessVector(string $value): float
     {
-        switch ($value) {
-            case self::NETWORK:
-                return 1;
-
-            case self::ADJACENT:
-                return 0.646;
-
-            case self::LOCAL:
-                return 0.395;
-        }
-
-        throw CvssException::invalidValue();
+        return match ($value) {
+            self::NETWORK => 1,
+            self::ADJACENT => 0.646,
+            self::LOCAL => 0.395,
+            default => throw CvssException::invalidValue(),
+        };
     }
 
     private static function parseAccessComplexity(string $value): float
     {
-        switch ($value) {
-            case self::HIGH:
-                return 0.35;
-
-            case self::MEDIUM:
-                return 0.61;
-
-            case self::LOW:
-                return 0.71;
-        }
-
-        throw CvssException::invalidValue();
+        return match ($value) {
+            self::HIGH => 0.35,
+            self::MEDIUM => 0.61,
+            self::LOW => 0.71,
+            default => throw CvssException::invalidValue(),
+        };
     }
 
     private static function parseAuthentication(string $value): float
     {
-        switch ($value) {
-            case self::MULTIPLE:
-                return 0.45;
-
-            case self::SINGLE:
-                return 0.56;
-
-            case self::NONE:
-                return 0.704;
-        }
-
-        throw CvssException::invalidValue();
+        return match ($value) {
+            self::MULTIPLE => 0.45,
+            self::SINGLE => 0.56,
+            self::NONE => 0.704,
+            default => throw CvssException::invalidValue(),
+        };
     }
 
     private static function parseConfidentialityIntegrityAvailabilityImpact(string $value): float
     {
-        switch ($value) {
-            case self::COMPLETE:
-                return 0.660;
-
-            case self::PARTIAL:
-                return 0.275;
-
-            case self::NONE:
-                return 0.0;
-        }
-
-        throw CvssException::invalidValue();
+        return match ($value) {
+            self::COMPLETE => 0.660,
+            self::PARTIAL => 0.275,
+            self::NONE => 0.0,
+            default => throw CvssException::invalidValue(),
+        };
     }
 
     private static function parseExploitability(?string $value): float
     {
-        switch ($value) {
-            case self::UNPROVEN:
-                return 0.85;
-
-            case self::PROOF_OF_CONCEPT:
-                return 0.9;
-
-            case self::FUNCTIONAL:
-                return 0.95;
-
-            default:
-                return 1.0;
-        }
+        return match ($value) {
+            self::UNPROVEN => 0.85,
+            self::PROOF_OF_CONCEPT => 0.9,
+            self::FUNCTIONAL => 0.95,
+            default => 1.0,
+        };
     }
 
     private static function parseRemediationLevel(?string $value): float
     {
-        switch ($value) {
-            case self::OFFICIAL_FIX:
-                return 0.87;
-
-            case self::TEMPORARY_FIX:
-                return 0.90;
-
-            case self::WORKAROUND:
-                return 0.95;
-
-            default:
-                return 1.0;
-        }
+        return match ($value) {
+            self::OFFICIAL_FIX => 0.87,
+            self::TEMPORARY_FIX => 0.90,
+            self::WORKAROUND => 0.95,
+            default => 1.0,
+        };
     }
 
     private static function parseReportConfidence(?string $value): float
     {
-        switch ($value) {
-            case self::UNCONFIRMED:
-                return 0.90;
-
-            case self::UNCORROBORATED:
-                return 0.95;
-
-            default:
-                return 1.0;
-        }
+        return match ($value) {
+            self::UNCONFIRMED => 0.90,
+            self::UNCORROBORATED => 0.95,
+            default => 1.0,
+        };
     }
 
     private static function parseCollateralDamagePotential(?string $value): float
     {
-        switch ($value) {
-            case self::LOW:
-                return 0.1;
-
-            case self::LOW_MEDIUM:
-                return 0.3;
-
-            case self::MEDIUM_HIGH:
-                return 0.4;
-
-            case self::HIGH:
-                return 0.5;
-
-            default:
-                return 0;
-        }
+        return match ($value) {
+            self::LOW => 0.1,
+            self::LOW_MEDIUM => 0.3,
+            self::MEDIUM_HIGH => 0.4,
+            self::HIGH => 0.5,
+            default => 0,
+        };
     }
 
     private static function parseTargetDistribution(?string $value): float
     {
-        switch ($value) {
-            case self::NONE:
-                return 0;
-
-            case self::LOW:
-                return 0.25;
-
-            case self::MEDIUM:
-                return 0.75;
-
-            default:
-                return 1.0;
-        }
+        return match ($value) {
+            self::NONE => 0,
+            self::LOW => 0.25,
+            self::MEDIUM => 0.75,
+            default => 1.0,
+        };
     }
 
     private static function parseSecurityRequirements(?string $value): float
     {
-        switch ($value) {
-            case self::LOW:
-                return 0.5;
-
-            case self::HIGH:
-                return 1.51;
-
-            default:
-                return 1.0;
-        }
+        return match ($value) {
+            self::LOW => 0.5,
+            self::HIGH => 1.51,
+            default => 1.0,
+        };
     }
 
 }

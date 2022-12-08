@@ -166,140 +166,88 @@ class Cvss31Parser
 
     private static function parseAttackVector(string $value): float
     {
-        switch ($value) {
-            case self::NETWORK:
-                return 0.85;
-
-            case self::ADJACENT:
-                return 0.62;
-
-            case self::LOCAL:
-                return 0.55;
-
-            case self::PHYSICAL:
-                return 0.2;
-        }
-
-        throw CvssException::invalidValue();
+        return match ($value) {
+            self::NETWORK => 0.85,
+            self::ADJACENT => 0.62,
+            self::LOCAL => 0.55,
+            self::PHYSICAL => 0.2,
+            default => throw CvssException::invalidValue(),
+        };
     }
 
     private static function parseAttackComplexity(string $value): float
     {
-        switch ($value) {
-            case self::LOW:
-                return 0.77;
-
-            case self::HIGH:
-                return 0.44;
-        }
-
-        throw CvssException::invalidValue();
+        return match ($value) {
+            self::LOW => 0.77,
+            self::HIGH => 0.44,
+            default => throw CvssException::invalidValue(),
+        };
     }
 
     private static function parsePrivilegesRequired(string $value, string $scope): float
     {
-        switch ($value) {
-            case self::NONE:
-                return 0.85;
-
-            case self::LOW:
-                return $scope === CvssObject::SCOPE_UNCHANGED ? 0.62 : 0.68;
-
-            case self::HIGH:
-                return $scope === CvssObject::SCOPE_UNCHANGED ? 0.27 : 0.5;
-        }
-
-        throw CvssException::invalidValue();
+        return match ($value) {
+            self::NONE => 0.85,
+            self::LOW => $scope === CvssObject::SCOPE_UNCHANGED ? 0.62 : 0.68,
+            self::HIGH => $scope === CvssObject::SCOPE_UNCHANGED ? 0.27 : 0.5,
+            default => throw CvssException::invalidValue(),
+        };
     }
 
     private static function parseUserInteraction(string $value): float
     {
-        switch ($value) {
-            case self::NONE:
-                return 0.85;
-
-            case self::REQUIRED:
-                return 0.62;
-        }
-
-        throw CvssException::invalidValue();
+        return match ($value) {
+            self::NONE => 0.85,
+            self::REQUIRED => 0.62,
+            default => throw CvssException::invalidValue(),
+        };
     }
 
     private static function parseConfidentialityIntegrityOrAvailability(string $value): float
     {
-        switch ($value) {
-            case self::HIGH:
-                return 0.56;
-
-            case self::LOW:
-                return 0.22;
-
-            case self::NONE:
-                return 0;
-        }
-
-        throw CvssException::invalidValue();
+        return match ($value) {
+            self::HIGH => 0.56,
+            self::LOW => 0.22,
+            self::NONE => 0,
+            default => throw CvssException::invalidValue(),
+        };
     }
 
     private static function parseExploitCodeMaturity(?string $value): float
     {
-        switch ($value) {
-            case self::FUNCTIONAL:
-                return 0.97;
-
-            case self::PROOF_OF_CONCEPT:
-                return 0.94;
-
-            case self::UNPROVEN:
-                return 0.91;
-
-            default:
-                return 1;
-        }
+        return match ($value) {
+            self::FUNCTIONAL => 0.97,
+            self::PROOF_OF_CONCEPT => 0.94,
+            self::UNPROVEN => 0.91,
+            default => 1,
+        };
     }
 
     private static function parseRemediationLevel(?string $value): float
     {
-        switch ($value) {
-            case self::WORKAROUND:
-                return 0.97;
-
-            case self::TEMPORARY_FIX:
-                return 0.96;
-
-            case self::OFFICIAL_FIX:
-                return 0.95;
-
-            default:
-                return 1;
-        }
+        return match ($value) {
+            self::WORKAROUND => 0.97,
+            self::TEMPORARY_FIX => 0.96,
+            self::OFFICIAL_FIX => 0.95,
+            default => 1,
+        };
     }
 
     private static function parseReportConfidence(?string $value): float
     {
-        switch ($value) {
-            case self::REASONABLE:
-                return 0.96;
-
-            case self::UNKNOWN:
-                return 0.92;
-
-            default:
-                return 1;
-        }
+        return match ($value) {
+            self::REASONABLE => 0.96,
+            self::UNKNOWN => 0.92,
+            default => 1,
+        };
     }
 
     private static function parseConfidentialityIntegrityOrAvailabilityRequirements(?string $value): float
     {
-        switch ($value) {
-            case self::HIGH:
-                return 1.5;
-
-            case self::LOW:
-                return 0.5;
-
-            default:
-                return 1;
-        }
+        return match ($value) {
+            self::HIGH => 1.5,
+            self::LOW => 0.5,
+            default => 1,
+        };
     }
 }
