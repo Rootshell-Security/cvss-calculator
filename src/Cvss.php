@@ -41,16 +41,12 @@ class Cvss
 
     private static function buildCalculator(string $version): CvssCalculator
     {
-        switch ($version) {
-            case CvssObject::VERSION_2:
-                return new Cvss2Calculator();
-            case CvssObject::VERSION_30:
-                return new Cvss30Calculator();
-            case CvssObject::VERSION_31:
-                return new Cvss31Calculator();
-        }
-
-        throw CvssException::invalidVector();
+        return match ($version) {
+            CvssObject::VERSION_2 => new Cvss2Calculator(),
+            CvssObject::VERSION_30 => new Cvss30Calculator(),
+            CvssObject::VERSION_31 => new Cvss31Calculator(),
+            default => throw CvssException::invalidVector(),
+        };
     }
 
     private static function validateVector(string $vector): bool
