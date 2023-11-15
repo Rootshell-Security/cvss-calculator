@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Rootshell\Cvss\Calculators;
 
-use Rootshell\Cvss\ValueObjects\CvssObject;
+use Rootshell\Cvss\ValueObjects\Cvss23Object;
 
 class Cvss31Calculator extends AbstractCvss3Calculator
 {
-    public function calculateModifiedImpactSubScore(CvssObject $cvssObject): float
+    public function calculateModifiedImpactSubScore(Cvss23Object $cvssObject): float
     {
         return min(
             1 - ((1 - $cvssObject->confidentialityRequirement * $cvssObject->modifiedConfidentiality) *
@@ -18,9 +18,9 @@ class Cvss31Calculator extends AbstractCvss3Calculator
         );
     }
 
-    public function calculateModifiedImpact(CvssObject $cvssObject): float
+    public function calculateModifiedImpact(Cvss23Object $cvssObject): float
     {
-        if ($cvssObject->modifiedScope === CvssObject::SCOPE_UNCHANGED) {
+        if ($cvssObject->modifiedScope === Cvss23Object::SCOPE_UNCHANGED) {
             return 6.42 * $cvssObject->modifiedImpactSubScore;
         }
 

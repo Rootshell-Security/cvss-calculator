@@ -7,7 +7,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use Rootshell\Cvss\Exceptions\CvssException;
 use Rootshell\Cvss\Parsers\Cvss2Parser;
-use Rootshell\Cvss\ValueObjects\CvssObject;
+use Rootshell\Cvss\ValueObjects\Cvss23Object;
 
 class Cvss2ParserTest extends TestCase
 {
@@ -120,7 +120,7 @@ class Cvss2ParserTest extends TestCase
     public function testParseBaseValues(): void
     {
         $method = self::getMethod('parseBaseValues');
-        $result = $method->invokeArgs($this->parser, ['CVSS:2/AV:N/AC:M/Au:M/C:C/I:P/A:N', new CvssObject]);
+        $result = $method->invokeArgs($this->parser, ['CVSS:2/AV:N/AC:M/Au:M/C:C/I:P/A:N', new Cvss23Object]);
 
         self::assertEquals(1.0, $result->accessVector);
         self::assertEquals(0.61, $result->accessComplexity);
@@ -133,7 +133,7 @@ class Cvss2ParserTest extends TestCase
     public function testParseTemporalValues(): void
     {
         $method = self::getMethod('parseTemporalValues');
-        $result = $method->invokeArgs($this->parser, ['CVSS:2/AV:N/AC:M/Au:M/C:C/I:P/A:N/E:POC/RL:OF/RC:C', new CvssObject]);
+        $result = $method->invokeArgs($this->parser, ['CVSS:2/AV:N/AC:M/Au:M/C:C/I:P/A:N/E:POC/RL:OF/RC:C', new Cvss23Object]);
 
         self::assertEquals(0.9, $result->exploitability);
         self::assertEquals(0.87, $result->remediationLevel);
@@ -147,7 +147,7 @@ class Cvss2ParserTest extends TestCase
             $this->parser,
             [
                 'CVSS:2/AV:N/AC:M/Au:M/C:C/I:P/A:N/E:POC/RL:OF/RC:C/CDP:MH/TD:L/CR:ND/IR:L/AR:H',
-                new CvssObject,
+                new Cvss23Object,
             ]
         );
 
