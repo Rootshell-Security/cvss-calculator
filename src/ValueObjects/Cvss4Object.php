@@ -43,14 +43,14 @@ class Cvss4Object extends CvssObject
             5 => $this->eq1 . $this->eq2 . $this->eq3 . $this->eq4 . ((int)$this->eq5 + 1) . $this->eq6,
         ];
 
-        if $this->eq3 === '0' && $this->eq6 === '0') {
+        if ($this->eq3 === '0' && $this->eq6 === '0') {
             $vectors[3] = $this->eq1 . $this->eq2 . $this->eq3 . $this->eq4 . $this->eq5 . ((int)$this->eq6 + 1);
             $vectors[6] = $this->eq1 . $this->eq2 . ((int)$this->eq3 + 1) . $this->eq4 . $this->eq5 . $this->eq6;
 
             return $vectors;
         }
 
-        $vectors[3] = match $this->eq3 . $this->eq6) {
+        $vectors[3] = match ($this->eq3 . $this->eq6) {
             '11', '01' => $this->eq1 . $this->eq2 . ((int)$this->eq3 + 1) . $this->eq4 . $this->eq5 . $this->eq6,
             '10' => $this->eq1 . $this->eq2 . $this->eq3 . $this->eq4 . $this->eq5 . ((int)$this->eq6 + 1),
             default => $this->eq1 . $this->eq2 . ((int)$this->eq3 + 1) . $this->eq4 . $this->eq5 . ((int)$this->eq6 + 1),

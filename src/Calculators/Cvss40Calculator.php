@@ -6,7 +6,6 @@ use http\Exception\RuntimeException;
 use Rootshell\Cvss\Parsers\Cvss40Parser;
 use Rootshell\Cvss\ValueObjects\Cvss4Distance;
 use Rootshell\Cvss\ValueObjects\Cvss4Object;
-use Rootshell\Cvss\ValueObjects\Cvss4PercentageDistance;
 use Rootshell\Cvss\ValueObjects\CvssObject;
 
 class Cvss40Calculator implements CvssCalculator
@@ -310,6 +309,33 @@ class Cvss40Calculator implements CvssCalculator
         ],
     ];
 
+    private array $maxSeverity = [
+        1 => [
+            '0' => 1,
+            '1' => 4,
+            '2' => 5,
+        ],
+        2 => [
+            '0' => 1,
+            '1' => 2
+        ],
+        3 => [
+            '0' => ['0' => 7, '1' => 6],
+            '1' => ['0' => 8, '1' => 8],
+            '2' => ['1' => 10],
+        ],
+        4 => [
+            '0' => 6,
+            '1' => 5,
+            '2' => 4,
+        ],
+        5 => [
+            '0' => 1,
+            '1' => 1,
+            '2' => 1,
+        ],
+    ];
+
     public function calculateBaseScore(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss4Object) {
@@ -354,12 +380,12 @@ class Cvss40Calculator implements CvssCalculator
 
     public function calculateTemporalScore(CvssObject $cvssObject): float
     {
-        $this->calculateBaseScore($cvssObject);
+        return $this->calculateBaseScore($cvssObject);
     }
 
     public function calculateEnvironmentalScore(CvssObject $cvssObject): float
     {
-        $this->calculateBaseScore($cvssObject);
+        return $this->calculateBaseScore($cvssObject);
     }
 
     private function lookupMicroVector(string $vector): ?float
@@ -388,7 +414,7 @@ class Cvss40Calculator implements CvssCalculator
         if (!isset(
             $this->maxComposed[1][$cvssObject->eq1],
             $this->maxComposed[2][$cvssObject->eq2],
-            $this->maxComposed[3][$cvssObject->eq3][$cvssObject->eq5],
+            $this->maxComposed[3][$cvssObject->eq3][$cvssObject->eq6],
             $this->maxComposed[4][$cvssObject->eq4],
             $this->maxComposed[5][$cvssObject->eq5]
         )) {
@@ -398,7 +424,7 @@ class Cvss40Calculator implements CvssCalculator
 
         foreach ($this->maxComposed[1][$cvssObject->eq1] as $eq1Vector) {
             foreach ($this->maxComposed[2][$cvssObject->eq2] as $eq2Vector) {
-                foreach ($this->maxComposed[3][$cvssObject->eq3][$cvssObject->eq5] as $eq3Vector) {
+                foreach ($this->maxComposed[3][$cvssObject->eq3][$cvssObject->eq6] as $eq3Vector) {
                     foreach ($this->maxComposed[4][$cvssObject->eq4] as $eq4Vector) {
                         foreach ($this->maxComposed[5][$cvssObject->eq5] as $eq5Vector) {
                             $maxVector = $parser->parseVector($eq1Vector . $eq2Vector . $eq3Vector . $eq4Vector . $eq5Vector);
@@ -467,19 +493,19 @@ class Cvss40Calculator implements CvssCalculator
         $normalisedSeverity = new Cvss4Distance();
 
         if (!$availableDistance->eqOne) {
-            $normalisedSeverity->eqOne = $availableDistance->eqOne * ($severityDistance->eqOne / ($this->maxComposed[1][$cvssObject->eq1] * 0.1));
+            $normalisedSeverity->eqOne = $availableDistance->eqOne * ($severityDistance->eqOne / ($this->maxSeverity[1][$cvssObject->eq1] * 0.1));
         }
 
         if (!$availableDistance->eqTwo) {
-            $normalisedSeverity->eqTwo = $availableDistance->eqTwo * ($severityDistance->eqTwo / ($this->maxComposed[2][$cvssObject->eq2] * 0.1));
+            $normalisedSeverity->eqTwo = $availableDistance->eqTwo * ($severityDistance->eqTwo / ($this->maxSeverity[2][$cvssObject->eq2] * 0.1));
         }
 
         if (!$availableDistance->eqThree) {
-            $normalisedSeverity->eqThree = $availableDistance->eqThree * ($severityDistance->eqThree / ($this->maxComposed[3][$cvssObject->eq3] * 0.1));
+            $normalisedSeverity->eqThree = $availableDistance->eqThree * ($severityDistance->eqThree / ($this->maxSeverity[3][$cvssObject->eq3][$cvssObject->eq6] * 0.1));
         }
 
         if (!$availableDistance->eqFour) {
-            $normalisedSeverity->eqFour = $availableDistance->eqFour * ($severityDistance->eqFour / ($this->maxComposed[4][$cvssObject->eq4] * 0.1));
+            $normalisedSeverity->eqFour = $availableDistance->eqFour * ($severityDistance->eqFour / ($this->maxSeverity[4][$cvssObject->eq4] * 0.1));
         }
 
         if (!$availableDistance->eqFive) {

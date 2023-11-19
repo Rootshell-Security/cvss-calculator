@@ -70,10 +70,10 @@ class Cvss40Parser
             sc: $this->parseSubsequentSystemConfidentialityImpact($this->findValueInVector($vector, self::SUBSEQUENT_SYSTEM_CONFIDENTIALITY_IMPACT)),
             si: $this->parseVulnerableSystemIntegrityImpact($this->findValueInVector($vector, self::SUBSEQUENT_SYSTEM_INTEGRITY_IMPACT)),
             sa: $this->parseVulnerableSystemAvailabilityImpact($this->findValueInVector($vector, self::SUBSEQUENT_SYSTEM_AVAILABILITY_IMPACT)),
-            cr: $cr ? $this->parseConfidentialityRequirement($cr) : null,
-            ir: $ir ? $this->parseIntegrityRequirement($ir) : null,
-            ar: $ar ? $this->parseAvailabilityRequirements($ar) : null,
-            e: $e ? $this->parseExploitMaturity($e) : null,
+            cr: $cr ? $this->parseConfidentialityRequirement($cr) : 0.0,
+            ir: $ir ? $this->parseIntegrityRequirement($ir) : 0.0,
+            ar: $ar ? $this->parseAvailabilityRequirements($ar) : 0.0,
+            e: $e ? $this->parseExploitMaturity($e) : 0.0,
 
         );
     }

@@ -12,6 +12,7 @@ use Rootshell\Cvss\Parsers\Cvss2Parser;
 use Rootshell\Cvss\Parsers\Cvss31Parser;
 use Rootshell\Cvss\Parsers\Cvss40Parser;
 use Rootshell\Cvss\ValueObjects\Cvss23Object;
+use Rootshell\Cvss\ValueObjects\CvssObject;
 use Rootshell\Cvss\ValueObjects\CvssResults;
 
 class Cvss
@@ -37,7 +38,7 @@ class Cvss
         return $cvssObject->getResults();
     }
 
-    private static function parseVector(string $vector, string $version): Cvss23Object
+    private static function parseVector(string $vector, string $version): CvssObject
     {
         return match ($version) {
             Cvss23Object::VERSION_2 => Cvss2Parser::parseVector($vector),

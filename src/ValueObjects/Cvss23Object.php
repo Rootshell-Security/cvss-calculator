@@ -42,15 +42,11 @@ class Cvss23Object extends CvssObject
 
     public float $impactSubScore = 0.0;
 
-    public float $baseScore = 0.0;
-
     public float $exploitCodeMaturity = 0.0;
 
     public float $remediationLevel = 0.0;
 
     public float $reportConfidence = 0.0;
-
-    public float $temporalScore = 0.0;
 
     public float $confidentialityRequirement = 0.0;
 
@@ -81,11 +77,4 @@ class Cvss23Object extends CvssObject
     public float $collateralDamagePotential = 0.0;
 
     public float $targetDistribution = 0.0;
-
-    public float $environmentalScore = 0.0;
-
-    public function getResults(): CvssResults
-    {
-        return new CvssResults($this->baseScore, $this->temporalScore, $this->environmentalScore);
-    }
 }
