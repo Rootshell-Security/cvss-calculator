@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace Rootshell\Cvss\Calculators;
 
+use http\Exception\RuntimeException;
 use Rootshell\Cvss\ValueObjects\Cvss23Object;
+use Rootshell\Cvss\ValueObjects\CvssObject;
 
 class Cvss31Calculator extends AbstractCvss3Calculator
 {
-    public function calculateModifiedImpactSubScore(Cvss23Object $cvssObject): float
+    public function calculateModifiedImpactSubScore(CvssObject $cvssObject): float
     {
+        if (!$cvssObject instanceof Cvss23Object) {
+            throw new RuntimeException('Wrong CVSS object');
+        }
+
         return min(
             1 - ((1 - $cvssObject->confidentialityRequirement * $cvssObject->modifiedConfidentiality) *
                 (1 - $cvssObject->integrityRequirement * $cvssObject->modifiedIntegrity) *
@@ -18,8 +24,12 @@ class Cvss31Calculator extends AbstractCvss3Calculator
         );
     }
 
-    public function calculateModifiedImpact(Cvss23Object $cvssObject): float
+    public function calculateModifiedImpact(CvssObject $cvssObject): float
     {
+        if (!$cvssObject instanceof Cvss23Object) {
+            throw new RuntimeException('Wrong CVSS object');
+        }
+
         if ($cvssObject->modifiedScope === Cvss23Object::SCOPE_UNCHANGED) {
             return 6.42 * $cvssObject->modifiedImpactSubScore;
         }
