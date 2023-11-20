@@ -47,10 +47,10 @@ class Cvss40Parser
 
     public function parseVector(string $vector): Cvss4Object
     {
-        $cr = $this->findOptionalValueInVector($vector, self::CONFIDENTIALITY_REQUIREMENT);
-        $ir = $this->findOptionalValueInVector($vector, self::INTEGRITY_REQUIREMENT);
-        $ar = $this->findOptionalValueInVector($vector, self::AVAILABILITY_REQUIREMENTS);
-        $e = $this->findOptionalValueInVector($vector, self::EXPLOIT_MATURITY);
+        $cr = $this->findOptionalValueInVector($vector, self::CONFIDENTIALITY_REQUIREMENT) ?? self::HIGH;
+        $ir = $this->findOptionalValueInVector($vector, self::INTEGRITY_REQUIREMENT) ?? self::HIGH;
+        $ar = $this->findOptionalValueInVector($vector, self::AVAILABILITY_REQUIREMENTS) ?? self::HIGH;
+        $e = $this->findOptionalValueInVector($vector, self::EXPLOIT_MATURITY) ?? self::ATTACKED;
 
         return new Cvss4Object(
             eq1: $this->parseEQOne($vector),
@@ -70,10 +70,10 @@ class Cvss40Parser
             sc: $this->parseSubsequentSystemConfidentialityImpact($this->findValueInVector($vector, self::SUBSEQUENT_SYSTEM_CONFIDENTIALITY_IMPACT)),
             si: $this->parseVulnerableSystemIntegrityImpact($this->findValueInVector($vector, self::SUBSEQUENT_SYSTEM_INTEGRITY_IMPACT)),
             sa: $this->parseVulnerableSystemAvailabilityImpact($this->findValueInVector($vector, self::SUBSEQUENT_SYSTEM_AVAILABILITY_IMPACT)),
-            cr: $cr ? $this->parseConfidentialityRequirement($cr) : 0.0,
-            ir: $ir ? $this->parseIntegrityRequirement($ir) : 0.0,
-            ar: $ar ? $this->parseAvailabilityRequirements($ar) : 0.0,
-            e: $e ? $this->parseExploitMaturity($e) : 0.0,
+            cr: $this->parseConfidentialityRequirement($cr),
+            ir: $this->parseIntegrityRequirement($ir),
+            ar: $this->parseAvailabilityRequirements($ar),
+            e: $this->parseExploitMaturity($e),
 
         );
     }
@@ -88,7 +88,7 @@ class Cvss40Parser
             return '0';
         }
 
-        if ($av === self::PHYSICAL || ($av !== self::NETWORK || $pr !== self::NONE || $ui !== self::NONE)) {
+        if ($av === self::PHYSICAL || !($av === self::NETWORK || $pr === self::NONE || $ui === self::NONE)) {
             return '2';
         }
 
@@ -98,9 +98,9 @@ class Cvss40Parser
     private function parseEQTwo(string $vector): string
     {
         $ac = $this->findValueInVector($vector, self::BASE_ATTACK_COMPLEXITY);
-        $ar = $this->findValueInVector($vector, self::ATTACK_REQUIREMENTS);
+        $at = $this->findValueInVector($vector, self::ATTACK_REQUIREMENTS);
 
-        if ($ac === self::LOW && $ar === self::NONE) {
+        if ($ac === self::LOW && $at === self::NONE) {
             return '0';
         }
 
@@ -111,7 +111,7 @@ class Cvss40Parser
     {
         $vc = $this->findValueInVector($vector, self::VULNERABLE_SYSTEM);
         $vi = $this->findValueInVector($vector, self::VULNERABLE_SYSTEM_INTEGRITY_IMPACT);
-        $va = $this->findValueInVector($vector, self::VULNERABLE_SYSTEM_INTEGRITY_IMPACT);
+        $va = $this->findValueInVector($vector, self::VULNERABLE_SYSTEM_AVAILABILITY_IMPACT);
 
         if ($vc === self::HIGH && $vi === self::HIGH) {
             return '0';
@@ -145,7 +145,7 @@ class Cvss40Parser
 
     private function parseEQFive(string $vector): string
     {
-        $e = $this->findOptionalValueInVector($vector, self::EXPLOIT_MATURITY) ?? self::NOT_DEFINED;
+        $e = $this->findOptionalValueInVector($vector, self::EXPLOIT_MATURITY) ?? self::ATTACKED;
 
         if ($e === self::ATTACKED) {
             return '0';
@@ -160,11 +160,11 @@ class Cvss40Parser
 
     private function parseEQSix(string $vector): string
     {
-        $cr = $this->findOptionalValueInVector($vector, self::CONFIDENTIALITY_REQUIREMENT) ?? self::NOT_DEFINED;
+        $cr = $this->findOptionalValueInVector($vector, self::CONFIDENTIALITY_REQUIREMENT) ?? self::HIGH;
         $vc = $this->findValueInVector($vector, self::VULNERABLE_SYSTEM);
-        $ir = $this->findOptionalValueInVector($vector, self::INTEGRITY_REQUIREMENT) ?? self::NOT_DEFINED;
+        $ir = $this->findOptionalValueInVector($vector, self::INTEGRITY_REQUIREMENT) ?? self::HIGH;
         $vi = $this->findValueInVector($vector, self::VULNERABLE_SYSTEM_INTEGRITY_IMPACT);
-        $ar = $this->findOptionalValueInVector($vector, self::AVAILABILITY_REQUIREMENTS) ?? self::NOT_DEFINED;
+        $ar = $this->findOptionalValueInVector($vector, self::AVAILABILITY_REQUIREMENTS) ?? self::HIGH;
         $va = $this->findValueInVector($vector, self::VULNERABLE_SYSTEM_AVAILABILITY_IMPACT);
 
         if (
