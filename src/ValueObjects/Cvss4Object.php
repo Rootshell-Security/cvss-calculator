@@ -61,21 +61,21 @@ class Cvss4Object extends CvssObject
 
     public function validMaxVector(self $comparator): bool
     {
-        return $this->getSeverityDistanceAV($comparator) > 0.0 &&
-            $this->getSeverityDistancePR($comparator) > 0.0 &&
-            $this->getSeverityDistanceUI($comparator) > 0.0 &&
-            $this->getSeverityDistanceAC($comparator) > 0.0 &&
-            $this->getSeverityDistanceAT($comparator) > 0.0 &&
-            $this->getSeverityDistanceVC($comparator) > 0.0 &&
-            $this->getSeverityDistanceVI($comparator) > 0.0 &&
-            $this->getSeverityDistanceVA($comparator) > 0.0 &&
-            $this->getSeverityDistanceSC($comparator) > 0.0 &&
-            $this->getSeverityDistanceSI($comparator) > 0.0 &&
-            $this->getSeverityDistanceSA($comparator) > 0.0 &&
-            $this->getSeverityDistanceCR($comparator) > 0.0 &&
-            $this->getSeverityDistanceIR($comparator) > 0.0 &&
-            $this->getSeverityDistanceAR($comparator) > 0.0 &&
-            $this->getSeverityDistanceE($comparator) > 0.0;
+        return $this->getSeverityDistanceAV($comparator) >= 0.0 &&
+            $this->getSeverityDistancePR($comparator) >= 0.0 &&
+            $this->getSeverityDistanceUI($comparator) >= 0.0 &&
+            $this->getSeverityDistanceAC($comparator) >= 0.0 &&
+            $this->getSeverityDistanceAT($comparator) >= 0.0 &&
+            $this->getSeverityDistanceVC($comparator) >= 0.0 &&
+            $this->getSeverityDistanceVI($comparator) >= 0.0 &&
+            $this->getSeverityDistanceVA($comparator) >= 0.0 &&
+            $this->getSeverityDistanceSC($comparator) >= 0.0 &&
+            $this->getSeverityDistanceSI($comparator) >= 0.0 &&
+            $this->getSeverityDistanceSA($comparator) >= 0.0 &&
+            $this->getSeverityDistanceCR($comparator) >= 0.0 &&
+            $this->getSeverityDistanceIR($comparator) >= 0.0 &&
+            $this->getSeverityDistanceAR($comparator) >= 0.0 &&
+            $this->getSeverityDistanceE($comparator) >= 0.0;
     }
 
     public function getSeverityDistanceAV(self $comparator): float

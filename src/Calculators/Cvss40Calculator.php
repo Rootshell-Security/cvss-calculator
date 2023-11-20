@@ -362,10 +362,7 @@ class Cvss40Calculator implements CvssCalculator
         $severityDistance = $this->calculateSeverityDistance($cvssObject, $maxVector);
 
         $availableDistance = $this->calculateAvailableDistance($initalValue, $lowerVectorValues);
-        $normalisedSeverity = $this->calculateNormalisedSeverity($cvssObject, $severityDistance, $availableDistance);
-
-
-        $finalValue = $initalValue - $this->calculateMeanDistance($normalisedSeverity);
+        $finalValue = $initalValue - $this->calculateMeanDistance($cvssObject, $severityDistance, $availableDistance);
 
         if ($finalValue < 0.0) {
             return 0.0;
@@ -428,7 +425,6 @@ class Cvss40Calculator implements CvssCalculator
                     foreach ($this->maxComposed[4][$cvssObject->eq4] as $eq4Vector) {
                         foreach ($this->maxComposed[5][$cvssObject->eq5] as $eq5Vector) {
                             $maxVector = $parser->parseVector($eq1Vector . $eq2Vector . $eq3Vector . $eq4Vector . $eq5Vector);
-
                             if ($maxVector->validMaxVector($cvssObject)) {
                                 return $maxVector;
                             }
@@ -492,48 +488,65 @@ class Cvss40Calculator implements CvssCalculator
     {
         $normalisedSeverity = new Cvss4Distance();
 
-        if (!$availableDistance->eqOne) {
-            $normalisedSeverity->eqOne = $availableDistance->eqOne * ($severityDistance->eqOne / ($this->maxSeverity[1][$cvssObject->eq1] * 0.1));
+        if ($availableDistance->eqOne) {
+            $maxSeverityOne = $this->maxSeverity[1][$cvssObject->eq1] * 0.1;
+            $normalisedSeverity->eqOne = $availableDistance->eqOne * ($severityDistance->eqOne / $maxSeverityOne);
         }
 
-        if (!$availableDistance->eqTwo) {
-            $normalisedSeverity->eqTwo = $availableDistance->eqTwo * ($severityDistance->eqTwo / ($this->maxSeverity[2][$cvssObject->eq2] * 0.1));
+        if ($availableDistance->eqTwo) {
+            $maxSeverityTwo = $this->maxSeverity[2][$cvssObject->eq2] * 0.1;
+            $normalisedSeverity->eqTwo = $availableDistance->eqTwo * ($severityDistance->eqTwo / $maxSeverityTwo);
         }
 
-        if (!$availableDistance->eqThree) {
-            $normalisedSeverity->eqThree = $availableDistance->eqThree * ($severityDistance->eqThree / ($this->maxSeverity[3][$cvssObject->eq3][$cvssObject->eq6] * 0.1));
+        if ($availableDistance->eqThree) {
+            $maxSeverityThree = $this->maxSeverity[3][$cvssObject->eq3][$cvssObject->eq6] * 0.1;
+            $normalisedSeverity->eqThree = $availableDistance->eqThree * ($severityDistance->eqThree / $maxSeverityThree);
         }
 
-        if (!$availableDistance->eqFour) {
-            $normalisedSeverity->eqFour = $availableDistance->eqFour * ($severityDistance->eqFour / ($this->maxSeverity[4][$cvssObject->eq4] * 0.1));
+        if ($availableDistance->eqFour) {
+            $maxSeverityFour = $this->maxSeverity[4][$cvssObject->eq4] * 0.1;
+            $normalisedSeverity->eqFour = $availableDistance->eqFour * ($severityDistance->eqFour / $maxSeverityFour);
         }
 
-        if (!$availableDistance->eqFive) {
-            $normalisedSeverity->eqFive = $availableDistance->eqFive;
+        if ($availableDistance->eqFive) {
+            $normalisedSeverity->eqFive = 0;
         }
 
         return $normalisedSeverity;
     }
 
-    private function calculateMeanDistance(Cvss4Distance $normalisedSeverity): float
+    private function calculateMeanDistance(Cvss4Object $cvssObject, Cvss4Distance $severityDistance, Cvss4Distance $availableDistance): float
     {
+        $normalisedSeverity = new Cvss4Distance();
         $existingLower = 0;
 
-        if ($normalisedSeverity->eqOne) {
+        if ($availableDistance->eqOne) {
             $existingLower++;
+            $maxSeverityOne = $this->maxSeverity[1][$cvssObject->eq1] * 0.1;
+            $normalisedSeverity->eqOne = $availableDistance->eqOne * ($severityDistance->eqOne / $maxSeverityOne);
         }
 
-        if ($normalisedSeverity->eqTwo) {
+        if ($availableDistance->eqTwo) {
             $existingLower++;
+            $maxSeverityTwo = $this->maxSeverity[2][$cvssObject->eq2] * 0.1;
+            $normalisedSeverity->eqTwo = $availableDistance->eqTwo * ($severityDistance->eqTwo / $maxSeverityTwo);
         }
-        if ($normalisedSeverity->eqThree) {
+
+        if ($availableDistance->eqThree) {
             $existingLower++;
+            $maxSeverityThree = $this->maxSeverity[3][$cvssObject->eq3][$cvssObject->eq6] * 0.1;
+            $normalisedSeverity->eqThree = $availableDistance->eqThree * ($severityDistance->eqThree / $maxSeverityThree);
         }
-        if ($normalisedSeverity->eqFour) {
+
+        if ($availableDistance->eqFour) {
             $existingLower++;
+            $maxSeverityFour = $this->maxSeverity[4][$cvssObject->eq4] * 0.1;
+            $normalisedSeverity->eqFour = $availableDistance->eqFour * ($severityDistance->eqFour / $maxSeverityFour);
         }
-        if ($normalisedSeverity->eqFive) {
+
+        if ($availableDistance->eqFive) {
             $existingLower++;
+            $normalisedSeverity->eqFive = 0;
         }
 
         if ($existingLower === 0) {
