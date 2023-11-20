@@ -3,6 +3,7 @@
 namespace Rootshell\Cvss\Calculators;
 
 use http\Exception\RuntimeException;
+use LanguageServerProtocol\PackageDescriptor;
 use Rootshell\Cvss\Parsers\Cvss40Parser;
 use Rootshell\Cvss\ValueObjects\Cvss4Distance;
 use Rootshell\Cvss\ValueObjects\Cvss4Object;
@@ -282,6 +283,10 @@ class Cvss40Calculator implements CvssCalculator
         '212211' => 0.3,
         '212221' => 0.1,
     ];
+
+    /**
+     * @var string[][]
+     */
     private array $maxComposed = [
         1 => [
             '0' => ['AV:N/PR:N/UI:N/'],
@@ -346,6 +351,16 @@ class Cvss40Calculator implements CvssCalculator
 
         $lowerVectors = $cvssObject->getLowerVectors();
 
+        if (
+            !is_string($lowerVectors[1]) ||
+            !is_string($lowerVectors[2]) ||
+            !is_string($lowerVectors[3]) ||
+            !is_string($lowerVectors[4]) ||
+            !is_string($lowerVectors[5])
+        ) {
+            throw new \RuntimeException('Invalid Lower Vector Generated');
+        }
+
         $lowerVectorValues = [
             1 => $this->lookupMicroVector($lowerVectors[1]),
             2 => $this->lookupMicroVector($lowerVectors[2]),
@@ -387,7 +402,7 @@ class Cvss40Calculator implements CvssCalculator
 
     private function lookupMicroVector(string $vector): ?float
     {
-        if (!isset($this->vectorLookup[$vector])) {
+        if (!isset($this->vectorLookup[$vector]) || !is_float($this->vectorLookup[$vector])) {
             return null;
         }
 
@@ -484,37 +499,6 @@ class Cvss40Calculator implements CvssCalculator
         );
     }
 
-    private function calculateNormalisedSeverity(Cvss4Object $cvssObject, Cvss4Distance $severityDistance, Cvss4Distance $availableDistance): Cvss4Distance
-    {
-        $normalisedSeverity = new Cvss4Distance();
-
-        if ($availableDistance->eqOne) {
-            $maxSeverityOne = $this->maxSeverity[1][$cvssObject->eq1] * 0.1;
-            $normalisedSeverity->eqOne = $availableDistance->eqOne * ($severityDistance->eqOne / $maxSeverityOne);
-        }
-
-        if ($availableDistance->eqTwo) {
-            $maxSeverityTwo = $this->maxSeverity[2][$cvssObject->eq2] * 0.1;
-            $normalisedSeverity->eqTwo = $availableDistance->eqTwo * ($severityDistance->eqTwo / $maxSeverityTwo);
-        }
-
-        if ($availableDistance->eqThree) {
-            $maxSeverityThree = $this->maxSeverity[3][$cvssObject->eq3][$cvssObject->eq6] * 0.1;
-            $normalisedSeverity->eqThree = $availableDistance->eqThree * ($severityDistance->eqThree / $maxSeverityThree);
-        }
-
-        if ($availableDistance->eqFour) {
-            $maxSeverityFour = $this->maxSeverity[4][$cvssObject->eq4] * 0.1;
-            $normalisedSeverity->eqFour = $availableDistance->eqFour * ($severityDistance->eqFour / $maxSeverityFour);
-        }
-
-        if ($availableDistance->eqFive) {
-            $normalisedSeverity->eqFive = 0;
-        }
-
-        return $normalisedSeverity;
-    }
-
     private function calculateMeanDistance(Cvss4Object $cvssObject, Cvss4Distance $severityDistance, Cvss4Distance $availableDistance): float
     {
         $normalisedSeverity = new Cvss4Distance();
@@ -522,24 +506,44 @@ class Cvss40Calculator implements CvssCalculator
 
         if ($availableDistance->eqOne) {
             $existingLower++;
+
+            if (!isset($this->maxSeverity[1][$cvssObject->eq1]) || !is_int($this->maxSeverity[1][$cvssObject->eq1])) {
+                throw new \RuntimeException('Invalid Max severity');
+            }
+
             $maxSeverityOne = $this->maxSeverity[1][$cvssObject->eq1] * 0.1;
             $normalisedSeverity->eqOne = $availableDistance->eqOne * ($severityDistance->eqOne / $maxSeverityOne);
         }
 
         if ($availableDistance->eqTwo) {
             $existingLower++;
+
+            if (!isset($this->maxSeverity[2][$cvssObject->eq2]) || !is_int($this->maxSeverity[2][$cvssObject->eq2])) {
+                throw new \RuntimeException('Invalid Max severity');
+            }
+
             $maxSeverityTwo = $this->maxSeverity[2][$cvssObject->eq2] * 0.1;
             $normalisedSeverity->eqTwo = $availableDistance->eqTwo * ($severityDistance->eqTwo / $maxSeverityTwo);
         }
 
         if ($availableDistance->eqThree) {
             $existingLower++;
+
+            if (!isset($this->maxSeverity[3][$cvssObject->eq3][$cvssObject->eq6]) || !is_int($this->maxSeverity[3][$cvssObject->eq3][$cvssObject->eq6])) {
+                throw new \RuntimeException('Invalid Max severity');
+            }
+
             $maxSeverityThree = $this->maxSeverity[3][$cvssObject->eq3][$cvssObject->eq6] * 0.1;
             $normalisedSeverity->eqThree = $availableDistance->eqThree * ($severityDistance->eqThree / $maxSeverityThree);
         }
 
         if ($availableDistance->eqFour) {
             $existingLower++;
+
+            if (!isset($this->maxSeverity[4][$cvssObject->eq4]) || !is_int($this->maxSeverity[4][$cvssObject->eq4])) {
+                throw new \RuntimeException('Invalid Max severity');
+            }
+
             $maxSeverityFour = $this->maxSeverity[4][$cvssObject->eq4] * 0.1;
             $normalisedSeverity->eqFour = $availableDistance->eqFour * ($severityDistance->eqFour / $maxSeverityFour);
         }
