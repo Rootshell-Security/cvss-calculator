@@ -13,6 +13,10 @@ class Cvss2Calculator implements CvssCalculator
 
     public function calculateBaseScore(CvssObject $cvssObject): float
     {
+        if (!$cvssObject instanceof Cvss23Object) {
+            throw new \RuntimeException('Wrong CVSS object');
+        }
+
         $cvssObject->impact = $this->calculateImpact($cvssObject);
 
         return round(((0.6 * $cvssObject->impact) + (0.4 * $this->calculateBaseExploitability($cvssObject)) - 1.5) * $this->calculateFImpact($cvssObject), 1);
@@ -35,11 +39,19 @@ class Cvss2Calculator implements CvssCalculator
 
     public function calculateTemporalScore(CvssObject $cvssObject): float
     {
+        if (!$cvssObject instanceof Cvss23Object) {
+            throw new \RuntimeException('Wrong CVSS object');
+        }
+
         return round($cvssObject->baseScore * $cvssObject->exploitability * $cvssObject->remediationLevel * $cvssObject->reportConfidence, 1);
     }
 
     public function calculateEnvironmentalScore(CvssObject $cvssObject): float
     {
+        if (!$cvssObject instanceof Cvss23Object) {
+            throw new \RuntimeException('Wrong CVSS object');
+        }
+
         $adjustedTemporal = $this->calculateAdjustedTemporal($cvssObject);
 
         return round(($adjustedTemporal + (10 - $adjustedTemporal) * $cvssObject->collateralDamagePotential) * $cvssObject->targetDistribution, 1);

@@ -17,7 +17,7 @@ abstract class AbstractCvss3Calculator implements CvssCalculator
     public function calculateBaseScore(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss23Object) {
-            throw new RuntimeException('Wrong CVSS object');
+            throw new \RuntimeException('Wrong CVSS object');
         }
 
         $cvssObject->impactSubScore = $this->calculateImpactSubScore($cvssObject);
@@ -57,7 +57,7 @@ abstract class AbstractCvss3Calculator implements CvssCalculator
     public function calculateTemporalScore(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss23Object) {
-            throw new RuntimeException('Wrong CVSS object');
+            throw new \RuntimeException('Wrong CVSS object');
         }
 
         return $this->roundUp($cvssObject->baseScore * $cvssObject->exploitCodeMaturity * $cvssObject->remediationLevel * $cvssObject->reportConfidence);
@@ -71,7 +71,7 @@ abstract class AbstractCvss3Calculator implements CvssCalculator
     public function calculateEnvironmentalScore(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss23Object) {
-            throw new RuntimeException('Wrong CVSS object');
+            throw new \RuntimeException('Wrong CVSS object');
         }
 
         $cvssObject->modifiedImpactSubScore = $this->calculateModifiedImpactSubScore($cvssObject);

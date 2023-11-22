@@ -13,7 +13,7 @@ class Cvss31Calculator extends AbstractCvss3Calculator
     public function calculateModifiedImpactSubScore(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss23Object) {
-            throw new RuntimeException('Wrong CVSS object');
+            throw new \RuntimeException('Wrong CVSS object');
         }
 
         return min(
@@ -27,7 +27,7 @@ class Cvss31Calculator extends AbstractCvss3Calculator
     public function calculateModifiedImpact(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss23Object) {
-            throw new RuntimeException('Wrong CVSS object');
+            throw new \RuntimeException('Wrong CVSS object');
         }
 
         if ($cvssObject->modifiedScope === Cvss23Object::SCOPE_UNCHANGED) {
