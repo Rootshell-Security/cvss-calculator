@@ -74,7 +74,6 @@ class Cvss40Parser
             ir: $this->parseIntegrityRequirement($ir),
             ar: $this->parseAvailabilityRequirements($ar),
             e: $this->parseExploitMaturity($e),
-
         );
     }
 
