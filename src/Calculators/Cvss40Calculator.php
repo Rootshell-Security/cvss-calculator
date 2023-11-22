@@ -284,9 +284,6 @@ class Cvss40Calculator implements CvssCalculator
         '212221' => 0.1,
     ];
 
-    /**
-     * @var string[][]
-     */
     private array $maxComposed = [
         1 => [
             '0' => ['AV:N/PR:N/UI:N/'],
@@ -344,7 +341,7 @@ class Cvss40Calculator implements CvssCalculator
     public function calculateBaseScore(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss4Object) {
-            throw new RuntimeException('Wrong CVSS object');
+            throw new \RuntimeException('Wrong CVSS object');
         }
 
         $initialValue = $this->lookupMicroVector($cvssObject->getMicroVector());
@@ -373,7 +370,7 @@ class Cvss40Calculator implements CvssCalculator
             5 => $this->lookupMicroVector($lowerVectors[5]),
         ];
 
-        if ($cvssObject->eq3 === '0' && $cvssObject->eq6 === '0' && isset($lowerVectors[6])) {
+        if ($cvssObject->eq3 === '0' && $cvssObject->eq6 === '0' && isset($lowerVectors[6]) && is_string($lowerVectors[6])) {
             $lowerVectorValues[3] = $this->calculateHighestEqValue($lowerVectors[3], $lowerVectors[6]);
         }
 
@@ -427,21 +424,33 @@ class Cvss40Calculator implements CvssCalculator
 
     private function getMaxVector(Cvss4Object $cvssObject): Cvss4Object
     {
-        if (!isset(
+        if (
+            !isset(
             $this->maxComposed[1][$cvssObject->eq1],
             $this->maxComposed[2][$cvssObject->eq2],
             $this->maxComposed[3][$cvssObject->eq3][$cvssObject->eq6],
             $this->maxComposed[4][$cvssObject->eq4],
             $this->maxComposed[5][$cvssObject->eq5]
-        )) {
+            ) ||
+            !is_array($this->maxComposed[1][$cvssObject->eq1]) ||
+            !is_array($this->maxComposed[2][$cvssObject->eq2]) ||
+            !is_array($this->maxComposed[3][$cvssObject->eq3][$cvssObject->eq6]) ||
+            !is_array($this->maxComposed[4][$cvssObject->eq4]) ||
+            !is_array($this->maxComposed[5][$cvssObject->eq5])
+        ) {
             throw new \RuntimeException('Error');
         }
         $parser = new Cvss40Parser();
 
+        /** @var string $eq1Vector */
         foreach ($this->maxComposed[1][$cvssObject->eq1] as $eq1Vector) {
+            /** @var string $eq2Vector */
             foreach ($this->maxComposed[2][$cvssObject->eq2] as $eq2Vector) {
+                /** @var string $eq3Vector */
                 foreach ($this->maxComposed[3][$cvssObject->eq3][$cvssObject->eq6] as $eq3Vector) {
+                    /** @var string $eq4Vector */
                     foreach ($this->maxComposed[4][$cvssObject->eq4] as $eq4Vector) {
+                        /** @var string $eq5Vector */
                         foreach ($this->maxComposed[5][$cvssObject->eq5] as $eq5Vector) {
                             $maxVector = $parser->parseVector($eq1Vector . $eq2Vector . $eq3Vector . $eq4Vector . $eq5Vector);
                             if ($maxVector->validMaxVector($cvssObject)) {
@@ -458,7 +467,7 @@ class Cvss40Calculator implements CvssCalculator
 
     /**
      * @param float $initalValue
-     * @param float[] $lowerValues
+     * @param float[]|null[] $lowerValues
      * @return Cvss4Distance
      */
     private function calculateAvailableDistance(float $initalValue, array $lowerValues): Cvss4Distance
