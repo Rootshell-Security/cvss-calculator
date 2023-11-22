@@ -1,0 +1,94 @@
+<?php
+
+namespace Rootshell\Cvss\Test;
+
+use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionMethod;
+use Rootshell\Cvss\Parsers\Cvss40Parser;
+
+class Cvss4ParserTest extends TestCase
+{
+    private Cvss40Parser $parser;
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->parser = new Cvss40Parser;
+    }
+
+    /**
+     * @dataProvider genericParseProvider
+     */
+    public function testGenericParseMethodsValid(string $methodName, string $value, float $expected): void
+    {
+        $method = self::getMethod($methodName);
+        $result = $method->invokeArgs($this->parser, [$value]);
+
+        self::assertEquals($expected, $result);
+    }
+
+    public static function genericParseProvider(): array
+    {
+        return [
+            ['parseExploitMaturity', 'U', 0.2],
+            ['parseExploitMaturity', 'P', 0.1],
+            ['parseExploitMaturity', 'A', 0.0],
+
+            ['parseAvailabilityRequirements', 'H', 0.0],
+            ['parseAvailabilityRequirements', 'M', 0.1],
+            ['parseAvailabilityRequirements', 'L', 0.2],
+
+            ['parseIntegrityRequirement', 'H', 0.0],
+            ['parseIntegrityRequirement', 'M', 0.1],
+            ['parseIntegrityRequirement', 'L', 0.2],
+
+            ['parseConfidentialityRequirement', 'H', 0.0],
+            ['parseConfidentialityRequirement', 'M', 0.1],
+            ['parseConfidentialityRequirement', 'L', 0.2],
+
+            ['parseSubsequentSystemConfidentialityImpact', 'H', 0.1],
+            ['parseSubsequentSystemConfidentialityImpact', 'L', 0.2],
+            ['parseSubsequentSystemConfidentialityImpact', 'N', 0.3],
+
+            ['parseVulnerableSystemAvailabilityImpact', 'H', 0.0],
+            ['parseVulnerableSystemAvailabilityImpact', 'L', 0.1],
+            ['parseVulnerableSystemAvailabilityImpact', 'N', 0.2],
+
+            ['parseVulnerableSystemIntegrityImpact', 'H', 0.0],
+            ['parseVulnerableSystemIntegrityImpact', 'L', 0.1],
+            ['parseVulnerableSystemIntegrityImpact', 'N', 0.2],
+
+            ['parseVulnerableSystem', 'H', 0.0],
+            ['parseVulnerableSystem', 'L', 0.1],
+            ['parseVulnerableSystem', 'N', 0.2],
+
+            ['parseAttackRequirements', 'N', 0.0],
+            ['parseAttackRequirements', 'P', 0.1],
+
+            ['parseAttackComplexity', 'L', 0.0],
+            ['parseAttackComplexity', 'H', 0.1],
+
+            ['parseUserInteraction', 'N', 0.0],
+            ['parseUserInteraction', 'P', 0.1],
+            ['parseUserInteraction', 'A', 0.2],
+
+            ['parsePrivilegesRequired', 'N', 0.0],
+            ['parsePrivilegesRequired', 'L', 0.1],
+            ['parsePrivilegesRequired', 'H', 0.2],
+
+            ['parseAttackVector', 'N', 0.0],
+            ['parseAttackVector', 'A', 0.1],
+            ['parseAttackVector', 'L', 0.2],
+            ['parseAttackVector', 'P', 0.3],
+        ];
+    }
+
+    protected static function getMethod($name): ReflectionMethod
+    {
+        $class = new ReflectionClass(Cvss40Parser::class);
+        $method = $class->getMethod($name);
+        $method->setAccessible(true);
+        return $method;
+    }
+
+}
