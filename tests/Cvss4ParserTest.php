@@ -5,6 +5,7 @@ namespace Rootshell\Cvss\Test;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionMethod;
+use Rootshell\Cvss\Exceptions\CvssException;
 use Rootshell\Cvss\Parsers\Cvss40Parser;
 
 class Cvss4ParserTest extends TestCase
@@ -80,7 +81,31 @@ class Cvss4ParserTest extends TestCase
             ['parseAttackVector', 'A', 0.1],
             ['parseAttackVector', 'L', 0.2],
             ['parseAttackVector', 'P', 0.3],
+
+            ['parseSubsequentSystemIntegrityImpact', 'S', 0.0],
+            ['parseSubsequentSystemIntegrityImpact', 'H', 0.1],
+            ['parseSubsequentSystemIntegrityImpact', 'L', 0.2],
+            ['parseSubsequentSystemIntegrityImpact', 'N', 0.3],
+
+            ['parseSubsequentSystemAvailabilityImpact', 'S', 0.0],
+            ['parseSubsequentSystemAvailabilityImpact', 'H', 0.1],
+            ['parseSubsequentSystemAvailabilityImpact', 'L', 0.2],
+            ['parseSubsequentSystemAvailabilityImpact', 'N', 0.3],
         ];
+    }
+
+    public function testFindValueInVectorFail(): void
+    {
+        $this->expectException(CvssException::class);
+
+        $method = self::getMethod('findValueInVector');
+        $method->invokeArgs(
+            $this->parser,
+            [
+                'CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H',
+                'I',
+            ]
+        );
     }
 
     protected static function getMethod($name): ReflectionMethod
