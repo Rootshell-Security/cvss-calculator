@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Rootshell\Cvss\Calculators;
-
 
 use Rootshell\Cvss\ValueObjects\CvssObject;
 

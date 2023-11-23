@@ -5,7 +5,7 @@ namespace Rootshell\Cvss\Parsers;
 
 
 use Rootshell\Cvss\Exceptions\CvssException;
-use Rootshell\Cvss\ValueObjects\CvssObject;
+use Rootshell\Cvss\ValueObjects\Cvss23Object;
 
 class Cvss2Parser
 {
@@ -59,9 +59,9 @@ class Cvss2Parser
     private const ENVIRONMENTAL_AVAILABILITY_REQUIREMENT = 'AR';
 
 
-    public static function parseVector(string $vector): CvssObject
+    public static function parseVector(string $vector): Cvss23Object
     {
-        $cvssObject = new CvssObject;
+        $cvssObject = new Cvss23Object;
         $cvssObject = self::parseBaseValues($vector, $cvssObject);
         $cvssObject = self::parseTemporalValues($vector, $cvssObject);
         $cvssObject = self::parseEnvironmentalValues($vector, $cvssObject);
@@ -69,7 +69,7 @@ class Cvss2Parser
         return $cvssObject;
     }
 
-    private static function parseBaseValues(string $vector, CvssObject $cvssObject): CvssObject
+    private static function parseBaseValues(string $vector, Cvss23Object $cvssObject): Cvss23Object
     {
         $cvssObject->accessVector = self::parseAccessVector(self::findValueInVector($vector, self::BASE_ACCESS_VECTOR));
         $cvssObject->accessComplexity = self::parseAccessComplexity(self::findValueInVector($vector, self::BASE_ATTACK_COMPLEXITY));
@@ -80,7 +80,7 @@ class Cvss2Parser
         return $cvssObject;
     }
 
-    private static function parseTemporalValues(string $vector, CvssObject $cvssObject): CvssObject
+    private static function parseTemporalValues(string $vector, Cvss23Object $cvssObject): Cvss23Object
     {
         $cvssObject->exploitability = self::parseExploitability(self::findOptionalValueInVector($vector, self::TEMPORAL_EXPLOITABILITY));
         $cvssObject->remediationLevel = self::parseRemediationLevel(self::findOptionalValueInVector($vector, self::TEMPORAL_REMEDIATION_LEVEL));
@@ -89,7 +89,7 @@ class Cvss2Parser
         return $cvssObject;
     }
 
-    private static function parseEnvironmentalValues(string $vector, CvssObject $cvssObject): CvssObject
+    private static function parseEnvironmentalValues(string $vector, Cvss23Object $cvssObject): Cvss23Object
     {
         $cvssObject->collateralDamagePotential = self::parseCollateralDamagePotential(self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_COLLATERAL_DAMAGE_POTENTIAL));
         $cvssObject->targetDistribution = self::parseTargetDistribution(self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_TARGET_DISTRIBUTION));

@@ -9,7 +9,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use Rootshell\Cvss\Exceptions\CvssException;
 use Rootshell\Cvss\Parsers\Cvss31Parser;
-use Rootshell\Cvss\ValueObjects\CvssObject;
+use Rootshell\Cvss\ValueObjects\Cvss23Object;
 
 class Cvss31ParserTest extends TestCase
 {
@@ -136,7 +136,7 @@ class Cvss31ParserTest extends TestCase
     public function testParseBaseValues(): void
     {
         $method = self::getMethod('parseBaseValues');
-        $result = $method->invokeArgs($this->parser, ['CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N', new CvssObject]);
+        $result = $method->invokeArgs($this->parser, ['CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N', new Cvss23Object]);
 
         self::assertEquals(0.85, $result->attackVector);
         self::assertEquals(0.44, $result->attackComplexity);
@@ -151,7 +151,7 @@ class Cvss31ParserTest extends TestCase
     public function testParseTemporalValues(): void
     {
         $method = self::getMethod('parseTemporalValues');
-        $result = $method->invokeArgs($this->parser, ['CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H/E:H/RL:T/RC:C', new CvssObject]);
+        $result = $method->invokeArgs($this->parser, ['CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H/E:H/RL:T/RC:C', new Cvss23Object]);
 
         self::assertEquals(1, $result->exploitCodeMaturity);
         self::assertEquals(0.96, $result->remediationLevel);
@@ -165,7 +165,7 @@ class Cvss31ParserTest extends TestCase
             $this->parser,
             [
                 'CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H/E:H/RL:T/RC:C/CR:M/IR:L/AR:H/MAV:A/MAC:L/MPR:N/MUI:R/MS:C/MC:H/MI:L/MA:N',
-                new CvssObject,
+                new Cvss23Object,
             ]
         );
 

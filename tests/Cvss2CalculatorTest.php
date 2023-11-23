@@ -4,7 +4,7 @@ namespace Rootshell\Cvss\Test;
 
 use PHPUnit\Framework\TestCase;
 use Rootshell\Cvss\Calculators\Cvss2Calculator;
-use Rootshell\Cvss\ValueObjects\CvssObject;
+use Rootshell\Cvss\ValueObjects\Cvss23Object;
 
 class Cvss2CalculatorTest extends TestCase
 {
@@ -30,7 +30,7 @@ class Cvss2CalculatorTest extends TestCase
         float $availability,
         float $expectedResult
     ): void {
-        $cvssObject = new CvssObject;
+        $cvssObject = new Cvss23Object;
         $cvssObject->accessVector = $accessVector;
         $cvssObject->accessComplexity = $accessComplexity;
         $cvssObject->authentication = $authentication;
@@ -61,7 +61,7 @@ class Cvss2CalculatorTest extends TestCase
         float $reportConfidence,
         float $expectedResult
     ): void {
-        $cvssObject = new CvssObject;
+        $cvssObject = new Cvss23Object;
         $cvssObject->baseScore = $baseScore;
         $cvssObject->exploitability = $exploitability;
         $cvssObject->remediationLevel = $remediationLevel;
@@ -82,7 +82,7 @@ class Cvss2CalculatorTest extends TestCase
 
     public function testCalculateEnvironmentalScore(): void
     {
-        $cvssObject = new CvssObject;
+        $cvssObject = new Cvss23Object;
         $cvssObject->accessVector = 1.00;
         $cvssObject->accessComplexity = 0.71;
         $cvssObject->authentication = 0.704;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Rootshell\Cvss\Parsers;
 
 use Rootshell\Cvss\Exceptions\CvssException;
-use Rootshell\Cvss\ValueObjects\CvssObject;
+use Rootshell\Cvss\ValueObjects\Cvss23Object;
 
 class Cvss31Parser
 {
@@ -60,9 +60,9 @@ class Cvss31Parser
     private const ENVIRONMENTAL_MODIFIED_INTEGRITY = 'MI';
     private const ENVIRONMENTAL_MODIFIED_AVAILABILITY = 'MA';
 
-    public static function parseVector(string $vector): CvssObject
+    public static function parseVector(string $vector): Cvss23Object
     {
-        $cvssObject = new CvssObject;
+        $cvssObject = new Cvss23Object;
         $cvssObject = self::parseBaseValues($vector, $cvssObject);
         $cvssObject = self::parseTemporalValues($vector, $cvssObject);
         $cvssObject = self::parseEnvironmentalValues($vector, $cvssObject);
@@ -70,7 +70,7 @@ class Cvss31Parser
         return $cvssObject;
     }
 
-    private static function parseBaseValues(string $vector, CvssObject $cvssObject): CvssObject
+    private static function parseBaseValues(string $vector, Cvss23Object $cvssObject): Cvss23Object
     {
         $cvssObject->modifiedScope = $cvssObject->scope = self::findValueInVector($vector, self::BASE_SCOPE);
         $cvssObject->modifiedAttackVector = $cvssObject->attackVector = self::parseAttackVector(self::findValueInVector($vector, self::BASE_ATTACK_VECTOR));
@@ -84,7 +84,7 @@ class Cvss31Parser
         return $cvssObject;
     }
 
-    private static function parseTemporalValues(string $vector, CvssObject $cvssObject): CvssObject
+    private static function parseTemporalValues(string $vector, Cvss23Object $cvssObject): Cvss23Object
     {
         $cvssObject->exploitCodeMaturity = self::parseExploitCodeMaturity(self::findOptionalValueInVector($vector, self::TEMPORAL_EXPLOIT_CODE_MATURITY));
         $cvssObject->remediationLevel = self::parseRemediationLevel(self::findOptionalValueInVector($vector, self::TEMPORAL_REMEDIATION_LEVEL));
@@ -93,7 +93,7 @@ class Cvss31Parser
         return $cvssObject;
     }
 
-    private static function parseEnvironmentalValues(string $vector, CvssObject $cvssObject): CvssObject
+    private static function parseEnvironmentalValues(string $vector, Cvss23Object $cvssObject): Cvss23Object
     {
         $modifiedScopeValue = self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_SCOPE);
 
@@ -188,8 +188,8 @@ class Cvss31Parser
     {
         return match ($value) {
             self::NONE => 0.85,
-            self::LOW => $scope === CvssObject::SCOPE_UNCHANGED ? 0.62 : 0.68,
-            self::HIGH => $scope === CvssObject::SCOPE_UNCHANGED ? 0.27 : 0.5,
+            self::LOW => $scope === Cvss23Object::SCOPE_UNCHANGED ? 0.62 : 0.68,
+            self::HIGH => $scope === Cvss23Object::SCOPE_UNCHANGED ? 0.27 : 0.5,
             default => throw CvssException::invalidValue(),
         };
     }
