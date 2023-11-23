@@ -7,7 +7,7 @@
 [![Coverage Status][badge-coverage]][coverage]
 [![Build][badge-build]][build]
 
-rootshell/cvss-calculator is a PHP library for translating a CVSS security vector into its relative score. Current support is for CVSS2, CVSS3 and CVSS3.1.
+rootshell/cvss-calculator is a PHP library for translating a CVSS security vector into its relative score. Current support is for CVSS2, CVSS3, CVSS3.1 and CVSS4.0.
 
 This project adheres to a [Contributor Code of Conduct][conduct]. By
 participating in this project and its community, you are expected to uphold this
