@@ -7,6 +7,7 @@ namespace Rootshell\Cvss\Test;
 use PHPUnit\Framework\TestCase;
 use Rootshell\Cvss\Calculators\Cvss31Calculator;
 use Rootshell\Cvss\ValueObjects\Cvss23Object;
+use Rootshell\Cvss\ValueObjects\Cvss4Object;
 
 class Cvss31CalculatorTest extends TestCase
 {
@@ -103,6 +104,15 @@ class Cvss31CalculatorTest extends TestCase
         $this->assertEquals(10.0, $result);
     }
 
+    public function testInvalidCvssObjectBaseScore(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Wrong CVSS object');
+
+        $cvssObject = new Cvss4Object('','','','','','');
+        $this->calculator->calculateBaseScore($cvssObject);
+    }
+
     public function testImpactScore(): void
     {
         $cvssObject = new Cvss23Object;
@@ -133,6 +143,15 @@ class Cvss31CalculatorTest extends TestCase
         $result = $this->calculator->calculateTemporalScore($cvssObject);
 
         $this->assertEquals(3.9, $result);
+    }
+
+    public function testInvalidCvssObjectTemporalScore(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Wrong CVSS object');
+
+        $cvssObject = new Cvss4Object('','','','','','');
+        $this->calculator->calculateTemporalScore($cvssObject);
     }
 
     public function testEnvironmentalScoreUnchangedScope(): void
@@ -265,5 +284,32 @@ class Cvss31CalculatorTest extends TestCase
 
         $result = $this->calculator->calculateEnvironmentalScore($cvssObject);
         $this->assertEquals(10, $result);
+    }
+
+    public function testInvalidCvssObjectEnvironmentalScore(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Wrong CVSS object');
+
+        $cvssObject = new Cvss4Object('','','','','','');
+        $this->calculator->calculateEnvironmentalScore($cvssObject);
+    }
+
+    public function testInvalidCvssObjectCalculateModifiedImpactSubScore(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Wrong CVSS object');
+
+        $cvssObject = new Cvss4Object('','','','','','');
+        $this->calculator->calculateModifiedImpactSubScore($cvssObject);
+    }
+
+    public function testInvalidCvssObjectCalculateModifiedImpact(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Wrong CVSS object');
+
+        $cvssObject = new Cvss4Object('','','','','','');
+        $this->calculator->calculateModifiedImpact($cvssObject);
     }
 }

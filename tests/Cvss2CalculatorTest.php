@@ -5,6 +5,7 @@ namespace Rootshell\Cvss\Test;
 use PHPUnit\Framework\TestCase;
 use Rootshell\Cvss\Calculators\Cvss2Calculator;
 use Rootshell\Cvss\ValueObjects\Cvss23Object;
+use Rootshell\Cvss\ValueObjects\Cvss4Object;
 
 class Cvss2CalculatorTest extends TestCase
 {
@@ -42,13 +43,22 @@ class Cvss2CalculatorTest extends TestCase
         self::assertEquals($expectedResult, $result);
     }
 
-    public function baseScoreProvider(): array
+    public static function baseScoreProvider(): array
     {
         return [
             [1.00, 0.71, 0.704, 0.66, 0.66, 0.66, 10.0],
             [0.395, 0.35, 0.704, 0.66, 0.66, 0.66, 6.2],
             [0.395, 0.35, 0.704, 0, 0, 0, 0.0],
         ];
+    }
+
+    public function testInvalidCvssObjectBaseScore(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Wrong CVSS object');
+
+        $cvssObject = new Cvss4Object('','','','','','');
+        $this->calculator->calculateBaseScore($cvssObject);
     }
 
     /**
@@ -71,13 +81,22 @@ class Cvss2CalculatorTest extends TestCase
         self::assertEquals($expectedResult, $result);
     }
 
-    public function temporalScoreProvider(): array
+    public static function temporalScoreProvider(): array
     {
         return [
             [10.0, 0.95, 0.87, 1.00, 8.3],
             [7.8, 0.95, 0.87, 1.00, 6.4],
             [6.2, 0.90, 0.87, 1.00, 4.9],
         ];
+    }
+
+    public function testInvalidCvssObjectTemporalScore(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Wrong CVSS object');
+
+        $cvssObject = new Cvss4Object('','','','','','');
+        $this->calculator->calculateTemporalScore($cvssObject);
     }
 
     public function testCalculateEnvironmentalScore(): void
@@ -104,5 +123,14 @@ class Cvss2CalculatorTest extends TestCase
 
         $result = $this->calculator->calculateEnvironmentalScore($cvssObject);
         self::assertEquals(9.0, $result);
+    }
+
+    public function testInvalidCvssObjectEnvironmentalScore(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Wrong CVSS object');
+
+        $cvssObject = new Cvss4Object('','','','','','');
+        $this->calculator->calculateEnvironmentalScore($cvssObject);
     }
 }

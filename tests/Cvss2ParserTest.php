@@ -30,7 +30,7 @@ class Cvss2ParserTest extends TestCase
         self::assertEquals($expectedResult, $result);
     }
 
-    public function genericParseProvider(): array
+    public static function genericParseProvider(): array
     {
         return [
             // Access Vectors
@@ -103,7 +103,7 @@ class Cvss2ParserTest extends TestCase
         $method->invokeArgs($this->parser, [$metricValue]);
     }
 
-    public function invalidParseProvider(): array
+    public static function invalidParseProvider(): array
     {
         return [
             // Access Vectors

@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd" cacheResultFile="./build/cache/phpunit.result.cache" colors="true" verbose="true">
-    <logging>
-        <log type="coverage-php" target="build/cov/coverage.cov"/>
-    </logging>
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">./src</directory>
-        </include>
-    </coverage>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         cacheDirectory="build/cache"
+         beStrictAboutCoverageMetadata="true"
+         beStrictAboutOutputDuringTests="true"
+         failOnRisky="true"
+         failOnWarning="true">
     <testsuites>
         <testsuite name="rootshell/cvss-calculator test suite">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
+
+
+    <source>
+        <include>
+            <directory>./src</directory>
+        </include>
+    </source>
 </phpunit>

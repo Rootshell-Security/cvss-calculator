@@ -10,14 +10,14 @@
   ],
   "license": "MIT",
   "require": {
-    "php": "^8.0 || ^8.1 || ^8.2",
+    "php": "^8.1 || ^8.2 || ^8.3",
     "ext-json": "*"
   },
   "require-dev": {
-    "infection/infection": "^0.26.16",
-    "php-coveralls/php-coveralls": "^2.5.3",
-    "phpunit/phpunit": "^9.5.26",
-    "vimeo/psalm": "^5.1.0"
+    "infection/infection": "^0.27.8",
+    "php-coveralls/php-coveralls": "^2.7.0",
+    "phpunit/phpunit": "^10.4.2",
+    "vimeo/psalm": "^5.16.0"
   },
   "config": {
     "sort-packages": true,

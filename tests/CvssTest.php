@@ -23,7 +23,7 @@ class CvssTest extends TestCase
         self::assertEquals($environmentScore, $result->environmentalScore);
     }
 
-    public function vectorProvider(): array
+    public static function vectorProvider(): array
     {
         return [
             ['CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N', 7.3, 7.3, 7.3],
@@ -85,7 +85,7 @@ class CvssTest extends TestCase
         Cvss::generateScores($vector);
     }
 
-    public function invalidVectorProvider(): array
+    public static function invalidVectorProvider(): array
     {
         return [
             ['CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/'],
@@ -98,7 +98,7 @@ class CvssTest extends TestCase
     /**
      * @dataProvider invalidVersionProvider
      */
-    public function testInvalidCalculator(): void
+    public function testInvalidCalculator(int|float $version): void
     {
         $this->expectExceptionCode(CvssException::class);
         $this->expectExceptionMessage('The vector you have provided is invalid');
@@ -109,10 +109,10 @@ class CvssTest extends TestCase
         $method->setAccessible(true);
         
         $cvs = new Cvss();
-        $method->invokeArgs($cvs, ['version' => 1]);
+        $method->invokeArgs($cvs, ['version' => $version]);
     }
     
-    public function invalidVersionProvider(): array
+    public static function invalidVersionProvider(): array
     {
         return [
             [1],

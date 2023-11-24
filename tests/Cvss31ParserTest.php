@@ -32,7 +32,7 @@ class Cvss31ParserTest extends TestCase
         self::assertEquals($expectedResult, $result);
     }
 
-    public function genericParseProvider(): array
+    public static function genericParseProvider(): array
     {
         return [
             // Attack Vectors
@@ -89,7 +89,7 @@ class Cvss31ParserTest extends TestCase
         $method->invokeArgs($this->parser, [$metricValue]);
     }
 
-    public function invalidParseProvider(): array
+    public static function invalidParseProvider(): array
     {
         return [
             // Attack Vectors
@@ -121,7 +121,7 @@ class Cvss31ParserTest extends TestCase
         self::assertEquals($expectedResult, $result);
     }
 
-    public function scopedParseProvider(): array
+    public static function scopedParseProvider(): array
     {
         return [
             'Privileges Required None (Unchanged)' => ['parsePrivilegesRequired', 'N', 'U', 0.85],
