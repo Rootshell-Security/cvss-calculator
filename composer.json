@@ -16,7 +16,7 @@
   "require-dev": {
     "infection/infection": "^0.26.16",
     "php-coveralls/php-coveralls": "^2.5.3",
-    "phpunit/phpunit": "^9.5.26",
+    "phpunit/phpunit": "^10.4.2",
     "vimeo/psalm": "^5.1.0"
   },
   "config": {

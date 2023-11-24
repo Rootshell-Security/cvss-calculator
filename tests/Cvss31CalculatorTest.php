@@ -7,6 +7,7 @@ namespace Rootshell\Cvss\Test;
 use PHPUnit\Framework\TestCase;
 use Rootshell\Cvss\Calculators\Cvss31Calculator;
 use Rootshell\Cvss\ValueObjects\Cvss23Object;
+use Rootshell\Cvss\ValueObjects\Cvss4Object;
 
 class Cvss31CalculatorTest extends TestCase
 {
@@ -101,6 +102,15 @@ class Cvss31CalculatorTest extends TestCase
         $result = $this->calculator->calculateBaseScore($cvssObject);
 
         $this->assertEquals(10.0, $result);
+    }
+
+    public function testInvalidCvssObjectBaseScore(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Wrong CVSS object');
+
+        $cvssObject = new Cvss4Object('','','','','','');
+        $this->calculator->calculateBaseScore($cvssObject);
     }
 
     public function testImpactScore(): void

@@ -42,7 +42,7 @@ class Cvss2CalculatorTest extends TestCase
         self::assertEquals($expectedResult, $result);
     }
 
-    public function baseScoreProvider(): array
+    public static function baseScoreProvider(): array
     {
         return [
             [1.00, 0.71, 0.704, 0.66, 0.66, 0.66, 10.0],
@@ -71,7 +71,7 @@ class Cvss2CalculatorTest extends TestCase
         self::assertEquals($expectedResult, $result);
     }
 
-    public function temporalScoreProvider(): array
+    public static function temporalScoreProvider(): array
     {
         return [
             [10.0, 0.95, 0.87, 1.00, 8.3],
