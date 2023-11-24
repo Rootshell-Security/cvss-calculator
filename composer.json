@@ -14,10 +14,10 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "infection/infection": "^0.26.16",
-    "php-coveralls/php-coveralls": "^2.5.3",
+    "infection/infection": "^0.27.8",
+    "php-coveralls/php-coveralls": "^2.7.0",
     "phpunit/phpunit": "^10.4.2",
-    "vimeo/psalm": "^5.1.0"
+    "vimeo/psalm": "^5.16.0"
   },
   "config": {
     "sort-packages": true,
