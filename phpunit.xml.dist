@@ -7,15 +7,16 @@
          beStrictAboutOutputDuringTests="true"
          failOnRisky="true"
          failOnWarning="true">
-<testsuites>
-    <testsuite name="rootshell/cvss-calculator test suite">
-        <directory>./tests</directory>
-    </testsuite>
-</testsuites>
+    <testsuites>
+        <testsuite name="rootshell/cvss-calculator test suite">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
 
-<source>
-    <include>
-        <directory>./src</directory>
-    </include>
-</source>
+
+    <source>
+        <include>
+            <directory>./src</directory>
+        </include>
+    </source>
 </phpunit>
