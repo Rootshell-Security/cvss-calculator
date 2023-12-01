@@ -152,5 +152,4 @@ class Cvss4Object extends CvssObject
     {
         return $comparator->e - $this->e;
     }
-
 }

@@ -48,7 +48,10 @@ jobs:
 
     - name: Run Static Analysis
       run: vendor/bin/psalm
-    
+
+    - name: Run Codesniffer
+      run: vendor/bin/phpcs
+
     - name: Coveralls GitHub
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
