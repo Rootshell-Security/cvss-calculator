@@ -39,8 +39,8 @@
   },
   "scripts": {
     "psalm": "psalm --show-info=false",
-    "phpunit": "phpunit --verbose --colors=always",
-    "phpunit-coverage": "phpunit --verbose --colors=always --coverage-html build/coverage",
+    "phpunit": "phpunit --colors=always",
+    "phpunit-coverage": "phpunit --colors=always --coverage-html build/coverage",
     "phpcs": "phpcs",
     "test": [
         "@phpunit",
