@@ -67,4 +67,4 @@ information.
 [conduct]: https://github.com/Rootshell-Security/cvss-calculator/blob/master/.github/CODE_OF_CONDUCT.md
 [license]: https://github.com/Rootshell-Security/cvss-calculator/blob/master/LICENSE
 [coverage]: https://coveralls.io/github/Rootshell-Security/cvss-calculator?branch=master
-[build]: https://github.com/Rootshell-Security/cvss-calculator/actions?query=workflow%3ABuild
+[build]: https://github.com/Rootshell-Security/cvss-calculator/actions?query=event%3Apush+workflow%3ABuild+branch%3Amaster

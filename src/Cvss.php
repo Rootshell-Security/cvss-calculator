@@ -43,7 +43,7 @@ class Cvss
         return match ($version) {
             Cvss23Object::VERSION_2 => Cvss2Parser::parseVector($vector),
             Cvss23Object::VERSION_30, Cvss23Object::VERSION_31 => Cvss31Parser::parseVector($vector),
-            Cvss23Object::VERSION_40 => (new Cvss40Parser)->parseVector($vector),
+            Cvss23Object::VERSION_40 => (new Cvss40Parser())->parseVector($vector),
         };
     }
 
