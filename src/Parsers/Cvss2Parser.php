@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Rootshell\Cvss\Parsers;
-
 
 use Rootshell\Cvss\Exceptions\CvssException;
 use Rootshell\Cvss\ValueObjects\Cvss23Object;
@@ -61,7 +59,7 @@ class Cvss2Parser
 
     public static function parseVector(string $vector): Cvss23Object
     {
-        $cvssObject = new Cvss23Object;
+        $cvssObject = new Cvss23Object();
         $cvssObject = self::parseBaseValues($vector, $cvssObject);
         $cvssObject = self::parseTemporalValues($vector, $cvssObject);
         $cvssObject = self::parseEnvironmentalValues($vector, $cvssObject);
@@ -219,5 +217,4 @@ class Cvss2Parser
             default => 1.0,
         };
     }
-
 }

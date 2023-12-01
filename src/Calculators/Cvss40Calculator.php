@@ -426,11 +426,11 @@ class Cvss40Calculator implements CvssCalculator
     {
         if (
             !isset(
-            $this->maxComposed[1][$cvssObject->eq1],
-            $this->maxComposed[2][$cvssObject->eq2],
-            $this->maxComposed[3][$cvssObject->eq3][$cvssObject->eq6],
-            $this->maxComposed[4][$cvssObject->eq4],
-            $this->maxComposed[5][$cvssObject->eq5]
+                $this->maxComposed[1][$cvssObject->eq1],
+                $this->maxComposed[2][$cvssObject->eq2],
+                $this->maxComposed[3][$cvssObject->eq3][$cvssObject->eq6],
+                $this->maxComposed[4][$cvssObject->eq4],
+                $this->maxComposed[5][$cvssObject->eq5]
             ) ||
             !is_array($this->maxComposed[1][$cvssObject->eq1]) ||
             !is_array($this->maxComposed[2][$cvssObject->eq2]) ||
@@ -462,7 +462,7 @@ class Cvss40Calculator implements CvssCalculator
             }
         }
 
-        return new Cvss4Object('', '','', '','','');
+        return new Cvss4Object('', '', '', '', '', '');
     }
 
     /**

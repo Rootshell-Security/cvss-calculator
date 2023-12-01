@@ -62,7 +62,7 @@ class Cvss31Parser
 
     public static function parseVector(string $vector): Cvss23Object
     {
-        $cvssObject = new Cvss23Object;
+        $cvssObject = new Cvss23Object();
         $cvssObject = self::parseBaseValues($vector, $cvssObject);
         $cvssObject = self::parseTemporalValues($vector, $cvssObject);
         $cvssObject = self::parseEnvironmentalValues($vector, $cvssObject);

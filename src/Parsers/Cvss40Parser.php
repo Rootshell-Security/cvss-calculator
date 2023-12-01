@@ -179,7 +179,7 @@ class Cvss40Parser
 
     private function parseAttackVector(string $value): float
     {
-        return match($value) {
+        return match ($value) {
             self::NETWORK => 0.0,
             self::ADJACENT => 0.1,
             self::LOCAL => 0.2,
@@ -189,7 +189,7 @@ class Cvss40Parser
 
     private function parsePrivilegesRequired(string $value): float
     {
-        return match($value) {
+        return match ($value) {
             self::NONE => 0.0,
             self::LOW => 0.1,
             self::HIGH => 0.2,
@@ -332,5 +332,4 @@ class Cvss40Parser
 
         return $matches[0] ?? null;
     }
-
 }
