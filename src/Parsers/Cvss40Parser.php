@@ -335,7 +335,7 @@ class Cvss40Parser
         }
 
         $regex = '/(?<=\/' . $section . ':)(.*?)(?=\/|$)/';
-        preg_match($regex,'/' . $vector, $matches);
+        preg_match($regex, '/' . $vector, $matches);
 
         return $matches[0] ?? null;
     }
