@@ -315,20 +315,27 @@ class Cvss40Parser
 
     private function findValueInVector(string $vector, string $section): string
     {
-        $regex = '/(?<=\/' . $section . ':)(.*?)(?=\/|$)/';
-        preg_match($regex, '/' . $vector, $matches);
+        $result = $this->findOptionalValueInVector($vector, $section);
 
-        if (!isset($matches[0])) {
+        if (!$result) {
             throw CvssException::missingValue();
         }
 
-        return $matches[0];
+        return $result;
     }
 
     private function findOptionalValueInVector(string $vector, string $section): ?string
     {
-        $regex = '/(?<=\/' . $section . ':)(.)/';
-        preg_match($regex, $vector, $matches);
+        $modifiedRegex = '/(?<=\/M' . $section . ':)(.*?)(?=\/|$)/';
+
+        preg_match($modifiedRegex, '/' . $vector, $modifiedMatches);
+
+        if (isset($modifiedMatches[0])) {
+            return $modifiedMatches[0];
+        }
+
+        $regex = '/(?<=\/' . $section . ':)(.*?)(?=\/|$)/';
+        preg_match($regex,'/' . $vector, $matches);
 
         return $matches[0] ?? null;
     }
