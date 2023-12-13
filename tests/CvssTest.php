@@ -43,6 +43,7 @@ class CvssTest extends TestCase
             ['CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:H/SI:N/SA:H', 6.4, 6.4, 6.4],
             ['CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P', 6.8, 6.8, 6.8],
             ['CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/MSI:S/S:P', 9.7, 9.7, 9.7],
+            ['CVSS:4.0/AV:A/AC:H/AT:P/PR:L/UI:P/VC:L/VI:H/VA:L/SC:L/SI:H/SA:L/E:P/CR:M/IR:L/AR:M/MAV:N/MAC:H/MAT:P/MPR:L/MUI:P/MVC:L/MVI:H/MVA:L/MSC:H/MSI:L/MSA:L/S:N/AU:N/R:U/V:D/RE:L/U:Green', 4.9, 4.9, 4.9],
 
             ['CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H', 8.0, 8.0, 8.0],
             ['CVSS:3.1/AV:P/AC:H/PR:H/UI:R/S:U/C:N/I:N/A:N/RL:U', 0.0, 0.0, 0.0],
