@@ -18,6 +18,10 @@ use Rootshell\Cvss\ValueObjects\CvssResults;
 class Cvss
 {
     private const V4_VALIDATION_REGEX = '/^CVSS:4.0\/AV:[NALP]\/AC:[LH]\/AT:[NP]\/PR:[NLH]\/UI:[NPA]\/VC:[NLH]\/VI:[NLH]\/VA:[NLH]\/SC:[NLH]\/SI:[NLH]\/SA:[NLH]/';
+    private const V4_VALIDATION_REGEX_OPTIONALS = '/\/S:[^NP{1}|\s]|\/AU:[^YN{1}\s]|\/R:[^AIU{1}|\s]|\/V:[^CD|\s]|\/RE:[^LMH{1}|\s]|\/U:[^CGAR{1}|\s]|'
+                                                    . '\/MAV:[^NALP{1}|\s]|\/MAC:[^LH{1}|\s]|\/MAT:[^NP{1}|\s]|\/MPR:[^NLH{1}|\s]|\/MUI:[^NPA{1}|\s]|'
+                                                    . '\/MVC:[^HLN{1}|\s]|\/MVI:[^HLN{1}|\s]|\/MVA:[^HLN{1}|\s]|\/MSC:[^HLN{1}|\s]|\/MSI:[^SHLN{1}|\s]|\/MSA:[^SHLN{1}|\s]|'
+                                                    . '\/CR:[^HML{1}|\s]|\/IR:[^HML{1}|\s]|\/AR:[^HML{1}|\s]|\/E:[^APU{1}|\s]/';
     private const V3_VALIDATION_REGEX = '/^CVSS:(3.1|3.0)\/AV:[NALP]\/AC:[LH]\/PR:[NLH]\/UI:[NR]\/S:[UC]\/C:[NLH]\/I:[NLH]\/A:[NLH]/';
     private const V2_VALIDATION_REGEX = '/AV:[LAN]\/AC:[HML]\/Au:[MSN]\/C:[NCP]\/I:[NCP]\/A:[NCP]/';
 
@@ -65,7 +69,19 @@ class Cvss
 
     private static function validCvssFourVector(string $vector): bool
     {
-        return (bool)preg_match(self::V4_VALIDATION_REGEX, $vector);
+        if (!(bool)preg_match(self::V4_VALIDATION_REGEX, $vector, $matches)) {
+            return false;
+        }
+
+        $optional = str_replace($matches[0], '', $vector);
+        preg_match(self::V4_VALIDATION_REGEX_OPTIONALS, $optional, $matches);
+
+
+        if ($optional && count($matches) > 0) {
+            return false;
+        }
+
+        return true;
     }
 
     private static function validCvssThreeVector(string $vector): bool
