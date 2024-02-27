@@ -344,6 +344,10 @@ class Cvss40Calculator implements CvssCalculator
             throw new \RuntimeException('Wrong CVSS object');
         }
 
+        if ($cvssObject->isDefaultVector()) {
+            return 0.0;
+        }
+
         $initialValue = $this->lookupMicroVector($cvssObject->getMicroVector());
 
         if (!is_float($initialValue)) {
