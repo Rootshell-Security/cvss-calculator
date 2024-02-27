@@ -344,7 +344,7 @@ class Cvss40Calculator implements CvssCalculator
             throw new \RuntimeException('Wrong CVSS object');
         }
 
-        if ($cvssObject->isDefaultVector()) {
+        if ($cvssObject->hasZeroImpact()) {
             return 0.0;
         }
 
