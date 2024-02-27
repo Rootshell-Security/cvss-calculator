@@ -317,7 +317,7 @@ class Cvss40Parser
     {
         $result = $this->findOptionalValueInVector($vector, $section);
 
-        if (!$result) {
+        if (is_null($result)) {
             throw CvssException::missingValue();
         }
 
