@@ -478,19 +478,19 @@ class Cvss40Calculator implements CvssCalculator
     {
         $availableDistance = new Cvss4Distance();
 
-        if ($lowerValues[1]) {
+        if (!is_null($lowerValues[1])) {
             $availableDistance->eqOne = $initalValue - $lowerValues[1];
         }
-        if ($lowerValues[2]) {
+        if (!is_null($lowerValues[2])) {
             $availableDistance->eqTwo = $initalValue - $lowerValues[2];
         }
-        if ($lowerValues[3]) {
+        if (!is_null($lowerValues[3])) {
             $availableDistance->eqThree = $initalValue - $lowerValues[3];
         }
-        if ($lowerValues[4]) {
+        if (!is_null($lowerValues[4])) {
             $availableDistance->eqFour = $initalValue - $lowerValues[4];
         }
-        if ($lowerValues[5]) {
+        if (!is_null($lowerValues[5])) {
             $availableDistance->eqFive = $initalValue - $lowerValues[5];
         }
 
