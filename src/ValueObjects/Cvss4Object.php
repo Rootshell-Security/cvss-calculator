@@ -34,6 +34,11 @@ class Cvss4Object extends CvssObject
         return $this->eq1 . $this->eq2 . $this->eq3 . $this->eq4 . $this->eq5 . $this->eq6;
     }
 
+    public function hasZeroImpact(): bool
+    {
+        return $this->vc === 0.2 && $this->vi === 0.2 && $this->va === 0.2 && $this->sc === 0.3 && $this->si === 0.3 && $this->sa === 0.3;
+    }
+
     public function getLowerVectors(): array
     {
         $vectors = [

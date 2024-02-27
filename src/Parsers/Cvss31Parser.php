@@ -97,7 +97,7 @@ class Cvss31Parser
     {
         $modifiedScopeValue = self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_SCOPE);
 
-        if ($modifiedScopeValue && $modifiedScopeValue !== self::NOT_DEFINED) {
+        if (!is_null($modifiedScopeValue) && $modifiedScopeValue !== self::NOT_DEFINED) {
             $cvssObject->modifiedScope = $modifiedScopeValue;
         }
 
@@ -113,31 +113,31 @@ class Cvss31Parser
         $modifiedIntegrityValue = self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_INTEGRITY);
         $modifiedAvailabilityValue = self::findOptionalValueInVector($vector, self::ENVIRONMENTAL_MODIFIED_AVAILABILITY);
 
-        if ($modifiedAttackVectorValue && $modifiedAttackVectorValue !== self::NOT_DEFINED) {
+        if (!is_null($modifiedAttackVectorValue) && $modifiedAttackVectorValue !== self::NOT_DEFINED) {
             $cvssObject->modifiedAttackVector = self::parseAttackVector($modifiedAttackVectorValue);
         }
 
-        if ($modifiedAttackComplexityValue && $modifiedAttackComplexityValue !== self::NOT_DEFINED) {
+        if (!is_null($modifiedAttackComplexityValue) && $modifiedAttackComplexityValue !== self::NOT_DEFINED) {
             $cvssObject->modifiedAttackComplexity = self::parseAttackComplexity($modifiedAttackComplexityValue);
         }
 
-        if ($modifiedPrivilegesRequiredValue && $modifiedPrivilegesRequiredValue !== self::NOT_DEFINED) {
+        if (!is_null($modifiedPrivilegesRequiredValue) && $modifiedPrivilegesRequiredValue !== self::NOT_DEFINED) {
             $cvssObject->modifiedPrivilegesRequired = self::parsePrivilegesRequired($modifiedPrivilegesRequiredValue, $cvssObject->modifiedScope);
         }
 
-        if ($modifiedUserInteractionValue && $modifiedUserInteractionValue !== self::NOT_DEFINED) {
+        if (!is_null($modifiedUserInteractionValue) && $modifiedUserInteractionValue !== self::NOT_DEFINED) {
             $cvssObject->modifiedUserInteraction = self::parseUserInteraction($modifiedUserInteractionValue);
         }
 
-        if ($modifiedConfidentialityValue && $modifiedConfidentialityValue !== self::NOT_DEFINED) {
+        if (!is_null($modifiedConfidentialityValue) && $modifiedConfidentialityValue !== self::NOT_DEFINED) {
             $cvssObject->modifiedConfidentiality = self::parseConfidentialityIntegrityOrAvailability($modifiedConfidentialityValue);
         }
 
-        if ($modifiedIntegrityValue && $modifiedIntegrityValue !== self::NOT_DEFINED) {
+        if (!is_null($modifiedIntegrityValue) && $modifiedIntegrityValue !== self::NOT_DEFINED) {
             $cvssObject->modifiedIntegrity = self::parseConfidentialityIntegrityOrAvailability($modifiedIntegrityValue);
         }
 
-        if ($modifiedAvailabilityValue && $modifiedAvailabilityValue !== self::NOT_DEFINED) {
+        if (!is_null($modifiedAvailabilityValue) && $modifiedAvailabilityValue !== self::NOT_DEFINED) {
             $cvssObject->modifiedAvailability = self::parseConfidentialityIntegrityOrAvailability($modifiedAvailabilityValue);
         }
 
