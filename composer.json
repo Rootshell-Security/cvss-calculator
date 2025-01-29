@@ -10,15 +10,15 @@
   ],
   "license": "MIT",
   "require": {
-    "php": "^8.1 || ^8.2 || ^8.3",
+    "php": "^8.2 || ^8.3 || 8.4",
     "ext-json": "*"
   },
   "require-dev": {
     "doctrine/coding-standard": "^12.0",
-    "infection/infection": "^0.27.8",
+    "infection/infection": "^0.29.10",
     "php-coveralls/php-coveralls": "^2.7.0",
-    "phpunit/phpunit": "^10.4.2",
-    "vimeo/psalm": "^5.16.0"
+    "phpunit/phpunit": "^10.5.42",
+    "vimeo/psalm": "^6.0.0"
   },
   "config": {
     "sort-packages": true,

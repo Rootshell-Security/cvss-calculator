@@ -2,7 +2,6 @@
 
 namespace Rootshell\Cvss\Calculators;
 
-use Rootshell\Cvss\Cvss;
 use Rootshell\Cvss\ValueObjects\Cvss23Object;
 use Rootshell\Cvss\ValueObjects\CvssObject;
 
