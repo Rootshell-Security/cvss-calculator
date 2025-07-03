@@ -5,7 +5,7 @@ namespace Rootshell\Cvss\Parsers;
 use Rootshell\Cvss\Exceptions\CvssException;
 use Rootshell\Cvss\ValueObjects\Cvss23Object;
 
-class Cvss2Parser
+final class Cvss2Parser
 {
     private const NETWORK = 'N';
     private const ADJACENT = 'A';

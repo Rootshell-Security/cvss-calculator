@@ -6,7 +6,7 @@ namespace Rootshell\Cvss\Exceptions;
 
 use Exception;
 
-class CvssException extends Exception
+final class CvssException extends Exception
 {
     public static function invalidValue(): self
     {

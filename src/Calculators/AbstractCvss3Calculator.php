@@ -14,6 +14,7 @@ abstract class AbstractCvss3Calculator implements CvssCalculator
     abstract public function calculateModifiedImpact(CvssObject $cvssObject): float;
     abstract public function roundUp(float $number): float;
 
+    #[\Override]
     public function calculateBaseScore(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss23Object) {
@@ -54,6 +55,7 @@ abstract class AbstractCvss3Calculator implements CvssCalculator
         return 8.22 * $cvssObject->attackVector * $cvssObject->attackComplexity * $cvssObject->privilegesRequired * $cvssObject->userInteraction;
     }
 
+    #[\Override]
     public function calculateTemporalScore(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss23Object) {
@@ -68,6 +70,7 @@ abstract class AbstractCvss3Calculator implements CvssCalculator
         return 8.22 * $cvssObject->modifiedAttackVector * $cvssObject->modifiedAttackComplexity * $cvssObject->modifiedPrivilegesRequired * $cvssObject->modifiedUserInteraction;
     }
 
+    #[\Override]
     public function calculateEnvironmentalScore(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss23Object) {

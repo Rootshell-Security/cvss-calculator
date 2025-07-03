@@ -46,6 +46,7 @@ class CvssTest extends TestCase
             ['CVSS:4.0/AV:A/AC:H/AT:P/PR:L/UI:P/VC:L/VI:H/VA:L/SC:L/SI:H/SA:L/E:P/CR:M/IR:L/AR:M/MAV:N/MAC:H/MAT:P/MPR:L/MUI:P/MVC:L/MVI:H/MVA:L/MSC:H/MSI:L/MSA:L/S:N/AU:N/R:U/V:D/RE:L/U:Green', 4.9, 4.9, 4.9],
             ['CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MAV:N/MAC:L/MAT:N/MPR:N/MUI:N/S:N/AU:N/R:A/V:D/RE:L/U:Clear', 6.9, 6.9, 6.9],
             ['CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/S:N/AU:N/R:A/V:D/RE:L/U:Clear', 6.9, 6.9, 6.9],
+            ['CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X', 7.5, 7.5, 7.5],
             ['CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:N/SC:N/SI:N/SA:N', 0, 0, 0],
 
 
@@ -233,7 +234,7 @@ class CvssTest extends TestCase
             'Invalid CVSS4.0 - X passed as MAV' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MAV:X/MAC:X/MAT:X/MPR:X/'
                                 . '/UI:X/S:N/AU:N/R:A/V:D/RE:L/U:Clear',
-                'valid' => false
+                'valid' => true
             ],
             'Invalid CVSS4.0 - Q passed' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MAV:Q',
@@ -357,7 +358,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional S:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/S:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional S:N' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/S:N',
@@ -369,7 +370,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional AU:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/AU:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional AU:N' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/AU:N',
@@ -381,7 +382,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional R:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/R:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional R:A' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/R:A',
@@ -397,7 +398,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional V:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/V:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional V:D' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/V:D',
@@ -409,7 +410,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional RE:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/RE:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional RE:L' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/RE:L',
@@ -425,7 +426,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional U:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/RE:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional U:Clear' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/U:Clear',
@@ -445,7 +446,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional MAV:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MAV:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional MAV:N' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MAX:N',
@@ -465,7 +466,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional MAC:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MAC:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional MAC:L' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MAC:L',
@@ -477,7 +478,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional MAT:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MAT:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional MAT:N' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MAT:N',
@@ -489,7 +490,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional MPR:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MPR:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional MPR:N' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MPR:N',
@@ -505,7 +506,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional MUI:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MUI:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional MUI:N' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MUI:N',
@@ -521,7 +522,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional MVC:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MVC:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional MVC:N' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MVC:N',
@@ -537,7 +538,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional MVI:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MVI:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional MVI:N' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MVI:N',
@@ -553,7 +554,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional MVA:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MVA:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional MVA:N' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MVA:N',
@@ -569,7 +570,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional MSC:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MSC:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional MSC:N' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MSC:N',
@@ -585,7 +586,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional MSI:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MSI:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional MSI:S' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MSI:N',
@@ -605,7 +606,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional MSA:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MSA:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional MSA:S' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/MSA:N',
@@ -625,7 +626,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional CR:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/CR:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional CR:M' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/CR:M',
@@ -641,7 +642,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional IR:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/IR:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional IR:M' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/IR:M',
@@ -657,7 +658,7 @@ class CvssTest extends TestCase
             ],
             'Valid CVSS4.0 - with optional AR:X' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/AR:X',
-                'valid' => false
+                'valid' => true
             ],
             'Valid CVSS4.0 - with optional AR:M' => [
                 'vector' => 'CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/AR:M',

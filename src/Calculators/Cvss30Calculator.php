@@ -8,8 +8,9 @@ use http\Exception\RuntimeException;
 use Rootshell\Cvss\ValueObjects\Cvss23Object;
 use Rootshell\Cvss\ValueObjects\CvssObject;
 
-class Cvss30Calculator extends AbstractCvss3Calculator
+final class Cvss30Calculator extends AbstractCvss3Calculator
 {
+    #[\Override]
     public function calculateModifiedImpactSubScore(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss23Object) {
@@ -24,6 +25,7 @@ class Cvss30Calculator extends AbstractCvss3Calculator
         );
     }
 
+    #[\Override]
     public function calculateModifiedImpact(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss23Object) {
@@ -37,6 +39,7 @@ class Cvss30Calculator extends AbstractCvss3Calculator
         return 7.52 * ($cvssObject->modifiedImpactSubScore - 0.029) - 3.25 * (($cvssObject->modifiedImpactSubScore - 0.02) ** 15);
     }
 
+    #[\Override]
     public function roundUp(float $number): float
     {
         return round(ceil($number * 10) / 10, 1);

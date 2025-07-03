@@ -6,7 +6,7 @@ use Rootshell\Cvss\Exceptions\CvssException;
 use Rootshell\Cvss\ValueObjects\Cvss23Object;
 use Rootshell\Cvss\ValueObjects\Cvss4Object;
 
-class Cvss40Parser
+final class Cvss40Parser
 {
     private const NETWORK = 'N';
     private const ADJACENT = 'A';
@@ -326,7 +326,7 @@ class Cvss40Parser
 
     private function findOptionalValueInVector(string $vector, string $section): ?string
     {
-        $modifiedRegex = '/(?<=\/M' . $section . ':)(.*?)(?=\/|$)/';
+        $modifiedRegex = '/(?<=\/M' . $section . ':)([^X\/]*)(?=\/|$)/';
 
         preg_match($modifiedRegex, '/' . $vector, $modifiedMatches);
 
@@ -334,7 +334,7 @@ class Cvss40Parser
             return $modifiedMatches[0];
         }
 
-        $regex = '/(?<=\/' . $section . ':)(.*?)(?=\/|$)/';
+        $regex = '/(?<=\/' . $section . ':)([^X\/]*)(?=\/|$)/';
         preg_match($regex, '/' . $vector, $matches);
 
         return $matches[0] ?? null;

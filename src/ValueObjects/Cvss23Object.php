@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Rootshell\Cvss\ValueObjects;
 
-class Cvss23Object extends CvssObject
+final class Cvss23Object extends CvssObject
 {
     public const SCOPE_UNCHANGED = 'U';
     public const SCOPE_CHANGED = 'C';
