@@ -2,7 +2,7 @@
 
 namespace Rootshell\Cvss\ValueObjects;
 
-class Cvss4Object extends CvssObject
+final class Cvss4Object extends CvssObject
 {
     public function __construct(
         public string $eq1,

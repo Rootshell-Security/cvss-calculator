@@ -2,7 +2,7 @@
 
 namespace Rootshell\Cvss\ValueObjects;
 
-class CvssResults
+final class CvssResults
 {
     public function __construct(
         public float $baseScore,

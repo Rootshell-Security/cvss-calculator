@@ -9,7 +9,7 @@ use Rootshell\Cvss\ValueObjects\Cvss4Distance;
 use Rootshell\Cvss\ValueObjects\Cvss4Object;
 use Rootshell\Cvss\ValueObjects\CvssObject;
 
-class Cvss40Calculator implements CvssCalculator
+final class Cvss40Calculator implements CvssCalculator
 {
     private array $vectorLookup = [
         '000000' => 10.0,
@@ -338,6 +338,7 @@ class Cvss40Calculator implements CvssCalculator
         ],
     ];
 
+    #[\Override]
     public function calculateBaseScore(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss4Object) {
@@ -395,11 +396,13 @@ class Cvss40Calculator implements CvssCalculator
         return round($finalValue, 1);
     }
 
+    #[\Override]
     public function calculateTemporalScore(CvssObject $cvssObject): float
     {
         return $this->calculateBaseScore($cvssObject);
     }
 
+    #[\Override]
     public function calculateEnvironmentalScore(CvssObject $cvssObject): float
     {
         return $this->calculateBaseScore($cvssObject);

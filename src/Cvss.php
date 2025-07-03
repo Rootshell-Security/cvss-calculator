@@ -15,7 +15,7 @@ use Rootshell\Cvss\ValueObjects\Cvss23Object;
 use Rootshell\Cvss\ValueObjects\CvssObject;
 use Rootshell\Cvss\ValueObjects\CvssResults;
 
-class Cvss
+final class Cvss
 {
     private const V4_VALIDATION_REGEX = '/^CVSS:4.0\/AV:[NALP]\/AC:[LH]\/AT:[NP]\/PR:[NLH]\/UI:[NPA]\/VC:[NLH]\/VI:[NLH]\/VA:[NLH]\/SC:[NLH]\/SI:[NLH]\/SA:[NLH]/';
     private const V4_VALIDATION_REGEX_OPTIONALS = '/\/S:[^NPX{1}|\s]|\/AU:[^YNX{1}\s]|\/R:[^AIUX{1}|\s]|\/V:[^CDX|\s]|\/RE:[^LMHX{1}|\s]|\/U:[^CGARX{1}|\s]|'

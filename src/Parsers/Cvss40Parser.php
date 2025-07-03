@@ -6,7 +6,7 @@ use Rootshell\Cvss\Exceptions\CvssException;
 use Rootshell\Cvss\ValueObjects\Cvss23Object;
 use Rootshell\Cvss\ValueObjects\Cvss4Object;
 
-class Cvss40Parser
+final class Cvss40Parser
 {
     private const NETWORK = 'N';
     private const ADJACENT = 'A';
