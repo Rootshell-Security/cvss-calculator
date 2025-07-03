@@ -2,7 +2,7 @@
 
 namespace Rootshell\Cvss\ValueObjects;
 
-class Cvss4Distance
+final class Cvss4Distance
 {
     public function __construct(
         public float $eqOne = 0.0,

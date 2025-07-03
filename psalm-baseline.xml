@@ -1,5 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.0.0@b8e96bb617bf59382113b1b56cef751f648a7dc9">
+<files psalm-version="6.12.0@cf420941d061a57050b6c468ef2c778faf40aee2">
+  <file src="src/Calculators/AbstractCvss3Calculator.php">
+    <InvalidOperand>
+      <code><![CDATA[($cvssObject->impactSubScore - 0.02) ** 15]]></code>
+      <code><![CDATA[1 - $cvssObject->availability]]></code>
+      <code><![CDATA[1 - $cvssObject->confidentiality]]></code>
+      <code><![CDATA[1 - $cvssObject->integrity]]></code>
+      <code><![CDATA[1 - ((1 - $cvssObject->confidentiality) * (1 - $cvssObject->integrity) * (1 - $cvssObject->availability))]]></code>
+    </InvalidOperand>
+  </file>
+  <file src="src/Calculators/Cvss2Calculator.php">
+    <InvalidOperand>
+      <code><![CDATA[1 - $cvssObject->availability]]></code>
+      <code><![CDATA[1 - $cvssObject->availability * $cvssObject->availabilityRequirement]]></code>
+      <code><![CDATA[1 - $cvssObject->confidentiality]]></code>
+      <code><![CDATA[1 - $cvssObject->confidentiality * $cvssObject->confidentialityRequirement]]></code>
+      <code><![CDATA[1 - $cvssObject->integrity]]></code>
+      <code><![CDATA[1 - $cvssObject->integrity * $cvssObject->integrityRequirement]]></code>
+      <code><![CDATA[1 - (1 - $cvssObject->confidentiality * $cvssObject->confidentialityRequirement) * (1 - $cvssObject->integrity * $cvssObject->integrityRequirement) * (1 - $cvssObject->availability * $cvssObject->availabilityRequirement)]]></code>
+      <code><![CDATA[1 - (1 - $cvssObject->confidentiality) * (1 - $cvssObject->integrity) * (1 - $cvssObject->availability)]]></code>
+      <code><![CDATA[10 - $adjustedTemporal]]></code>
+      <code><![CDATA[20 * $cvssObject->accessVector]]></code>
+    </InvalidOperand>
+  </file>
+  <file src="src/Calculators/Cvss30Calculator.php">
+    <InvalidOperand>
+      <code><![CDATA[$number * 10]]></code>
+      <code><![CDATA[($cvssObject->modifiedImpactSubScore - 0.02) ** 15]]></code>
+      <code><![CDATA[1 - $cvssObject->availabilityRequirement * $cvssObject->modifiedAvailability]]></code>
+      <code><![CDATA[1 - $cvssObject->confidentialityRequirement * $cvssObject->modifiedConfidentiality]]></code>
+      <code><![CDATA[1 - $cvssObject->integrityRequirement * $cvssObject->modifiedIntegrity]]></code>
+      <code><![CDATA[1 - ((1 - $cvssObject->confidentialityRequirement * $cvssObject->modifiedConfidentiality) *
+                (1 - $cvssObject->integrityRequirement * $cvssObject->modifiedIntegrity) *
+                (1 - $cvssObject->availabilityRequirement * $cvssObject->modifiedAvailability))]]></code>
+      <code><![CDATA[ceil($number * 10) / 10]]></code>
+    </InvalidOperand>
+  </file>
+  <file src="src/Calculators/Cvss31Calculator.php">
+    <InvalidOperand>
+      <code><![CDATA[$intInput % 10000]]></code>
+      <code><![CDATA[$intInput / 10000]]></code>
+      <code><![CDATA[$number * 100000]]></code>
+      <code><![CDATA[($cvssObject->modifiedImpactSubScore * 0.9731 - 0.02) ** 13]]></code>
+      <code><![CDATA[1 - $cvssObject->availabilityRequirement * $cvssObject->modifiedAvailability]]></code>
+      <code><![CDATA[1 - $cvssObject->confidentialityRequirement * $cvssObject->modifiedConfidentiality]]></code>
+      <code><![CDATA[1 - $cvssObject->integrityRequirement * $cvssObject->modifiedIntegrity]]></code>
+      <code><![CDATA[1 - ((1 - $cvssObject->confidentialityRequirement * $cvssObject->modifiedConfidentiality) *
+                (1 - $cvssObject->integrityRequirement * $cvssObject->modifiedIntegrity) *
+                (1 - $cvssObject->availabilityRequirement * $cvssObject->modifiedAvailability))]]></code>
+      <code><![CDATA[floor($intInput / 10000) + 1]]></code>
+    </InvalidOperand>
+  </file>
+  <file src="src/Calculators/Cvss40Calculator.php">
+    <InvalidOperand>
+      <code><![CDATA[$this->maxSeverity[1][$cvssObject->eq1] * 0.1]]></code>
+      <code><![CDATA[$this->maxSeverity[2][$cvssObject->eq2] * 0.1]]></code>
+      <code><![CDATA[$this->maxSeverity[3][$cvssObject->eq3][$cvssObject->eq6] * 0.1]]></code>
+      <code><![CDATA[$this->maxSeverity[4][$cvssObject->eq4] * 0.1]]></code>
+      <code><![CDATA[(
+                $normalisedSeverity->eqOne +
+                $normalisedSeverity->eqTwo +
+                $normalisedSeverity->eqThree +
+                $normalisedSeverity->eqFour +
+                $normalisedSeverity->eqFive
+            ) / $existingLower]]></code>
+    </InvalidOperand>
+  </file>
   <file src="src/Cvss.php">
     <UnusedClass>
       <code><![CDATA[Cvss]]></code>

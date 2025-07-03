@@ -5,8 +5,9 @@ namespace Rootshell\Cvss\Calculators;
 use Rootshell\Cvss\ValueObjects\Cvss23Object;
 use Rootshell\Cvss\ValueObjects\CvssObject;
 
-class Cvss2Calculator implements CvssCalculator
+final class Cvss2Calculator implements CvssCalculator
 {
+    #[\Override]
     public function calculateBaseScore(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss23Object) {
@@ -33,6 +34,7 @@ class Cvss2Calculator implements CvssCalculator
         return $cvssObject->impact === 0.0 ? 0.0 : 1.176;
     }
 
+    #[\Override]
     public function calculateTemporalScore(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss23Object) {
@@ -42,6 +44,7 @@ class Cvss2Calculator implements CvssCalculator
         return round($cvssObject->baseScore * $cvssObject->exploitability * $cvssObject->remediationLevel * $cvssObject->reportConfidence, 1);
     }
 
+    #[\Override]
     public function calculateEnvironmentalScore(CvssObject $cvssObject): float
     {
         if (!$cvssObject instanceof Cvss23Object) {
