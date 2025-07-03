@@ -326,7 +326,7 @@ class Cvss40Parser
 
     private function findOptionalValueInVector(string $vector, string $section): ?string
     {
-        $modifiedRegex = '/(?<=\/M' . $section . ':)(.*?)(?=\/|$)/';
+        $modifiedRegex = '/(?<=\/M' . $section . ':)([^X\/]*)(?=\/|$)/';
 
         preg_match($modifiedRegex, '/' . $vector, $modifiedMatches);
 
@@ -334,7 +334,7 @@ class Cvss40Parser
             return $modifiedMatches[0];
         }
 
-        $regex = '/(?<=\/' . $section . ':)(.*?)(?=\/|$)/';
+        $regex = '/(?<=\/' . $section . ':)([^X\/]*)(?=\/|$)/';
         preg_match($regex, '/' . $vector, $matches);
 
         return $matches[0] ?? null;
